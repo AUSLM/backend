@@ -11,17 +11,10 @@ from .config import cfg
 from .auth import user_loader, header_loader
 
 from .web import (accounts as accounts_web,
-                  events as events_web,
-                  users as users_web,
-                  oauth as ouath_web)
+                  users as users_web,)
 
 from .api import (accounts as accounts_api,
-                  events as events_api,
-                  users as users_api,
-                  reports as reports_api,
-                  education as education_api,
-                  tasks as tasks_api,
-                  tags as tags_api)
+                  users as users_api,)
 
 from .errors import add_error_handlers, on_json_loading_failed
 
@@ -41,17 +34,10 @@ app.config.update(
 )
 
 app.register_blueprint(accounts_web.bp)
-app.register_blueprint(events_web.bp)
 app.register_blueprint(users_web.bp)
 
 app.register_blueprint(accounts_api.bp, url_prefix='/api')
-app.register_blueprint(events_api.bp, url_prefix='/api/event')
 app.register_blueprint(users_api.bp, url_prefix='/api/user')
-app.register_blueprint(tasks_api.bp, url_prefix='/api/event')
-app.register_blueprint(education_api.bp, url_prefix='/api/edu')
-app.register_blueprint(reports_api.bp, url_prefix='/api/event')
-app.register_blueprint(tags_api.bp, url_prefix='/api/tag')
-app.register_blueprint(ouath_web.bp, url_prefix='/oauth')
 
 add_error_handlers(app)
 Request.on_json_loading_failed = on_json_loading_failed
