@@ -1,0 +1,16 @@
+bcrypt
+colorama
+Flask
+flask-cors
+Flask-Login
+Flask-Mail
+gevent
+nanoid
+pg8000
+psycopg2-binary
+PyJWT
+requests
+SQLAlchemy
+schema==0.7.2
+urllib3
+Authlib
