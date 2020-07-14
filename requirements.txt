@@ -9,6 +9,7 @@ nanoid
 pg8000
 psycopg2-binary
 PyJWT
+ldap3
 requests
 SQLAlchemy
 schema==0.7.2

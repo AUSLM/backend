@@ -4,7 +4,7 @@ import logging
 import urllib3
 
 import app
-from app import db, controller
+from app import db #, controller
 from app.config import cfg
 
 

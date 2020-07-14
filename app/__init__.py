@@ -1,8 +1,8 @@
 from flask import Flask, Request
 from flask_login import LoginManager
 from flask_mail import Mail
-from gevent import monkey
 from gevent.pywsgi import WSGIServer
+from gevent import monkey
 
 import logging
 
@@ -10,11 +10,9 @@ from .config import cfg
 
 from .auth import user_loader, header_loader
 
-from .web import (accounts as accounts_web,
-                  users as users_web,)
+from .web import (accounts as accounts_web)
 
-from .api import (accounts as accounts_api,
-                  users as users_api,)
+from .api_web import (accounts as accounts_api)
 
 from .errors import add_error_handlers, on_json_loading_failed
 
@@ -34,10 +32,8 @@ app.config.update(
 )
 
 app.register_blueprint(accounts_web.bp)
-app.register_blueprint(users_web.bp)
 
 app.register_blueprint(accounts_api.bp, url_prefix='/api')
-app.register_blueprint(users_api.bp, url_prefix='/api/user')
 
 add_error_handlers(app)
 Request.on_json_loading_failed = on_json_loading_failed
@@ -54,7 +50,7 @@ logging.basicConfig(format='[%(asctime)s] [%(levelname)s] %(message)s',
 
 
 def run():
-    monkey.patch_all(ssl=false)
+    monkey.patch_all(ssl=False)
     http_server = WSGIServer((cfg.HOST, cfg.PORT), app)
     logging.info('Started server')
     http_server.serve_forever()

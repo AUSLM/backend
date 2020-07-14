@@ -44,7 +44,8 @@ def create_tables(default_user_login):
             name='Super',
             surname='Admin',
             service_status='superadmin',
-            invitation_link='none'
+            confirmation_link='none',
+            status='active'
         )
         s.add(root)
     cfg.SUPER_ADMIN_PASSWORD = ''

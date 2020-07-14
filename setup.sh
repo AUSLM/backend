@@ -1,38 +1,43 @@
 #!/bin/bash
 
 # пользователь postgresql
-export PGUSER=""
+export PGUSER=
 # адрес postgresql
-export PGHOST=""
+export PGHOST=
 # порт postgresql
-export PGPORT=""
+export PGPORT=
 # название БД в postgresql
-export PGDATABASE=""
+export PGDATABASE=
 # пароль пользователя postgresql
-export PGPASSWORD=""
+export PGPASSWORD=
 
+# адрес приложения
+export HOST=
 # порт приложения
-export PORT=""
+export PORT=
+
+# Использование Active directory
+export AD_USE=
 
 # временно - линк на сервис (http(s)://адрес:порт)
-export SITE_ADDR=""
+export SITE_ADDR=
 
 # почта супер-админа
-export SUPER_ADMIN_MAIL=""
+export SUPER_ADMIN_MAIL=
 # пароль от аккаунта супер-админа
-export SUPER_ADMIN_PASSWORD=""
+export SUPER_ADMIN_PASSWORD=
 # подтверждение регистрации по электронной почте
 # 'active' для отключения подтверждения
 # 'unconfirmed' для включения
-export DEFAULT_USER_STATUS=""
+export DEFAULT_USER_STATUS=
 
 # SMTP сервер
-export MAIL_SERVER=""
+export MAIL_SERVER=
 # Порт на почтовом сервере
 export MAIL_PORT=
 # Логин для почтового сервера
-export MAIL_USERNAME=""
+export MAIL_USERNAME=
 # Пароль от почтового сервера
-export MAIL_PASSWORD=""
+export MAIL_PASSWORD=
 # Адрес, который будет указан в поле From
-export MAIL_DEFAULT_SENDER=""
+export MAIL_DEFAULT_SENDER=

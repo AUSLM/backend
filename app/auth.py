@@ -1,10 +1,10 @@
 import jwt
 import time
-import ldap
+import ldap3
 import bcrypt
 
 from .config import cfg
-from ..db import User, Token, get_session
+from .db import User, Token, get_session
 
 
 def user_loader(uc_id):
@@ -15,9 +15,9 @@ def user_loader(uc_id):
 
 
 def ldap_check(email, password):
-    server = f"ldaps://{cfg.AD_SERVER_ADDR}"
+    server = f"ldap://{cfg.AD_SERVER_ADDR}"
 
-    connection = ldap.initialize(server)
+    connection = ldap3.initialize(server)
     connection.set_option(ldap, OPT_REFERRALS, 0)
     connection.protocol_version = 3
     try:
