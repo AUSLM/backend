@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block styles%}
-<link href="/static/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block page %}
@@ -68,7 +68,8 @@ MACHINES
 </div>
 
 
-
+<div class="card shadow mb-4">
+    <div class="card-body">
 <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
@@ -90,9 +91,10 @@ MACHINES
                     </tr>
                   </tfoot>
                   <tbody>
+                    {% for machine in machines %}
                     <tr>
-                      <td class="text-center">dev1.company.com</td>
-                      <td class="text-center" class="text-center">11.11.11.11</td>
+                      <td class="text-center"><a class="btn btn-link" href="/machine/{{machine.address}}" role="button">{{machine.domain}}</a></td>
+                      <td class="text-center" class="text-center">{{machine.address}}</td>
                       <td class="text-center text-light"><a class="btn btn-primary btn-icon-split"role="button">
                             <span class="icon">
                                 <i class="fas fa-arrow-right"></i>
@@ -114,62 +116,18 @@ MACHINES
                             </button>
                         </td>
                     </tr>
-                    <tr>
-                      <td class="text-center">dev2.company.com</td>
-                      <td class="text-center">12.12.12.12</td>
-                      <td class="text-center text-light"><a class="btn btn-primary btn-icon-split"role="button">
-                            <span class="icon">
-                                <i class="fas fa-arrow-right"></i>
-                            </span>
-                            <span class="text">Open</span>
-                        </a></td>
-                        <td class="text-center"><button type="button" class="btn btn-primary btn-icon-split">
-                            <span class="icon">
-                                <i class="fas fa-paste"></i>
-                            </span>
-                            <span class="text">SSH link</span>
-                        </button></td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-danger btn-icon-split">
-                                <span class="icon">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                                <span class="text">Delete</span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                      <td class="text-center">dev3.company.com</td>
-                      <td class="text-center">13.13.13.13</td>
-                      <td class="text-center text-light"><a class="btn btn-primary btn-icon-split"role="button">
-                            <span class="icon">
-                                <i class="fas fa-arrow-right"></i>
-                            </span>
-                            <span class="text">Open</span>
-                        </a></td>
-                        <td class="text-center"><button type="button" class="btn btn-primary btn-icon-split">
-                            <span class="icon">
-                                <i class="fas fa-paste"></i>
-                            </span>
-                            <span class="text">SSH link</span>
-                        </button></td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-danger btn-icon-split">
-                                <span class="icon">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                                <span class="text">Delete</span>
-                            </button>
-                        </td>
-                    </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block extra_js%}
 <!-- Datatables -->
-<script src="/static/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="/static/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
 <!-- Datatables custom script -->
   <script src="/static/js/datatables.js"></script>

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    var form = document.getElementById('login_form')
-    var button = document.getElementById('login_submit_button')
+    var form = document.getElementById('add_form')
+    var button = document.getElementById('add_machine_button')
 
     form.addEventListener('submit', event => {
 
@@ -10,18 +10,18 @@ document.addEventListener('DOMContentLoaded', () => {
         button.disabled = true
 
         fetch(
-            '/api/login',
+            '/api/add_machine',
             {
                 method: 'POST',
                 body: JSON.stringify(
                     {
-                        email:
+                        domain:
                             document
-                                .getElementById('login_user_email')
+                                .getElementById('add_machine_domain')
                                     .value,
-                        password: 
+                        address: 
                             document
-                                .getElementById('login_user_password')
+                                .getElementById('add_machine_address')
                                     .value
                     }
                 ),
@@ -48,14 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.textContent = body['description']
                 setTimeout(
                     () => {
-                        const urlParams = 
-                            new URLSearchParams(window.location.search);
-                        const location = urlParams.get('next');
-                        if (location != null) {
-                            window.location = location
-                        } else {
-                            window.location = '/'
-                        }
+                        button.disabled = false
+                        button.textContent = 'Add'
+                        form.reset()
                     },
                     750
                 )
@@ -67,10 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(
                     () => {
                         button.disabled = false
-                        button.textContent = 'Send'
-                        if (error.code == 409) {
-                            window.location = '/'
-                        }
+                        button.textContent = 'Add'
                     },
                     750
                 )

@@ -67,3 +67,11 @@ reset_password = Schema(
     },
     ignore_extra_keys=True
 )
+
+add_machine = Schema(
+    {
+        'domain': Use(str),
+        'address': Use(str),
+    },
+    ignore_extra_keys=True
+)

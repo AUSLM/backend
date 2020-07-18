@@ -12,16 +12,16 @@ from ..db import *
 from .. import mails
 
 
-def new_machine(e_email, addr, domain):
+def add_machine(e_email, addr, domain):
     with get_session() as s:
         machine = s.query(Machine).filter(
                 Machine.address == addr
         ).one_or_none()
 
         if machine:
-            if machine.status = 'active':
-                abort(409, 'Machine is exists!')
-            elif machine.status = 'deleted':
+            if machine.status == 'active':
+                abort(409, 'Machine is exist!')
+            elif machine.status == 'deleted':
                 machine.status = 'active'
                 machine.domain = domain
         else:

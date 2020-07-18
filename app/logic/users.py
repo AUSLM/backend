@@ -59,7 +59,7 @@ def get_user_machines(u_email):
         ).all()
         for _, access, machine in user_machines:
             result.append({
-                'id': machine.id
+                'id': machine.id,
                 'address': machine.address,
                 'domain': machine.domain,
                 'access_issued': access.issued,
@@ -75,7 +75,7 @@ def get_users(status):
         ).all()
         for user in users:
             result.append({
-                'id': user.id
+                'id': user.id,
                 'email': user.email,
                 'name': user.name,
                 'surname': user.surname,
