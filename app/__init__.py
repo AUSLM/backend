@@ -10,7 +10,8 @@ from .config import cfg
 
 from .auth import user_loader, header_loader
 
-from .web import (accounts as accounts_web)
+from .web import (accounts as accounts_web,
+                  machines as machines_web)
 
 from .api_web import (accounts as accounts_api)
 
@@ -32,6 +33,7 @@ app.config.update(
 )
 
 app.register_blueprint(accounts_web.bp)
+app.register_blueprint(machines_web.bp)
 
 app.register_blueprint(accounts_api.bp, url_prefix='/api')
 

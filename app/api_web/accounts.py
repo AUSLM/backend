@@ -7,7 +7,8 @@ from ..auth import pre_login
 from ..validation.validation import validate
 from ..validation import schemas
 
-bp = Blueprint('accounts', __name__)
+
+bp = Blueprint('accounts_api_web', __name__)
 
 
 @bp.route('/login', methods=['POST'])

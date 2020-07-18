@@ -48,7 +48,8 @@ def register_user(email, password, name, surname):
             else:
                 abort(409, 'Trying to register existing user')
         else:
-            user = User(email=email, password='-', name=name, surname=surname)
+            user = User(email=email, password='-', name=name, surname=surname,
+                        confirmation_link=confirmation_link)
 
             if cfg.AD_USE:
                 if not ldap_check(email, password):

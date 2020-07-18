@@ -1,0 +1,59 @@
+{% extends "blank.html" %}
+{% block title %}
+<title>Manage machines - AUSLM</title>
+{% endblock %}
+
+{% block page %}
+MANAGE MACHINES
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Add machine</h6>
+            </div>
+            <div class="card-body">
+                <form id="add_form">
+                    <div class="form-group">
+                        <input
+                            id="add_machine_domain"
+                            class="form-control"
+                            placeholder="domain"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input
+                            id="add_machine_address"
+                            class="form-control"
+                            placeholder="x.x.x.x"
+                            required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="add_machine_button">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Remove machine</h6>
+            </div>
+            <div class="card-body">
+                <form id="remove_form">
+                    <div class="form-group">
+                        <input
+                            id="remove_machine_address"
+                            class="form-control"
+                            placeholder="x.x.x.x"
+                            required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="remove_machine_button">Remove</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

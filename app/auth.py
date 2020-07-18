@@ -2,6 +2,7 @@ import jwt
 import time
 import ldap3
 import bcrypt
+from flask import abort
 
 from .config import cfg
 from .db import User, Token, get_session

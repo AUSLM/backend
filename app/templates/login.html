@@ -1,0 +1,86 @@
+{% extends "blank_not_login.html" %}
+{% block title %}
+<title>Login - AUSLM</title>
+{% endblock %}
+
+{% block content %}
+                            <!-- Nested Row within Card Body -->
+                            <div class="row">
+                                <div class="col-lg-6 d-none d-lg-block">
+                                    <div class="p-5">
+                                        <div class="text-center mb-4">
+                                            <h1 class="h4 text-gray-900">This is AUSLM</h1>
+                                            <p class="text-gray-900">AUth Service for Linux Machines</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-gray-900">Что входит в задачи данного сервиса?</p>
+                                        </div>
+                                        <div>
+                                            <ul>
+                                                <li>
+                                                    Управление пользователями и удаленными машинами
+                                                </li>
+                                                <li>
+                                                    Управление доступами пользователей
+                                                </li>
+                                                <li>
+                                                    Хранение публичных ключей
+                                                </li>
+                                                <li>
+                                                    Автоматизация распространения доступов и ключей
+                                                </li>
+                                                <li>
+                                                    Контроль состояния удаленных машин
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="p-5">
+                                        <div class="text-center">
+                                            <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        </div>
+                                        <form class="user" id="login_form">
+                                            <div class="form-group">
+                                                <input
+                                                    id="login_user_email"
+                                                    type="email"
+                                                    class="form-control form-control-user"
+                                                    aria-describedby="emailHelp"
+                                                    placeholder="E-mail"
+                                                    required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input
+                                                    id="login_user_password"
+                                                    type="password"
+                                                    class="form-control form-control-user"
+                                                    placeholder="Password"
+                                                    required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-user btn-block" id="login_submit_button">
+                                                Login
+                                            </button>
+                                            <hr />
+                                            <a href="/register" class="btn btn-facebook btn-user btn-block">Register </a>
+                                        </form>
+
+                                        {% if not AD_USE %}
+
+                                        <hr />
+                                        <div class="text-center">
+                                            <a class="small" href="/reset_password">Forgot Password?</a>
+                                        </div>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script src="/static/js/auslm/login.js"></script>
+{% endblock %}

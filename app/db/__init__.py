@@ -25,7 +25,7 @@ def get_session():
         session.close()
 
 
-def create_tables(default_user_login):
+def create_tables(password):
     logging.info('Dropping existing tables')
     try:
         Base.metadata.reflect(_engine)
@@ -40,7 +40,7 @@ def create_tables(default_user_login):
     with get_session() as s:
         root = User(
             email=cfg.SUPER_ADMIN_MAIL,
-            password=cfg.SUPER_ADMIN_PASSWORD,
+            password=password,
             name='Super',
             surname='Admin',
             service_status='superadmin',
@@ -48,5 +48,4 @@ def create_tables(default_user_login):
             status='active'
         )
         s.add(root)
-    cfg.SUPER_ADMIN_PASSWORD = ''
     logging.info('Root user with mail [' + cfg.SUPER_ADMIN_MAIL + '] was created')

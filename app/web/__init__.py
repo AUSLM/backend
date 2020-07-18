@@ -15,14 +15,18 @@ def web_401(e):
 
 
 def web_404(e, param):
-    logging.warning('404 - [{}]'.format(e.description))
-    message = param + " not found"
+    if current_user.is_authenticated:
+        logging.warning('404 - [{}]'.format(e.description))
+        message = param + " not found"
 
-    return render_template(
-       '/404.html',
-        current_user=current_user,
-        message=message,
-    ), 404
+        return render_template(
+           '/404.html',
+            current_user=current_user,
+            message=message,
+        ), 404
+    else:
+        logging.warning('401 - [{}]'.format(e))
+        return redirect(url_for('accounts_web.login'))
 
 
 def web_500(e):
@@ -30,9 +34,13 @@ def web_500(e):
     message = traceback.format_exc()
     err = traceback.format_exc()
     send_500_email(e, err)
-    
-    return render_template(
-       '/500.html',
-        current_user=current_user,
-        message=message,
-    ), 500
+
+    if current_user.is_authenticated:
+        return render_template(
+            '/500.html',
+            current_user=current_user
+        ), 500
+    else:
+        return render_template(
+            '/500_not_login.html'
+        ), 500

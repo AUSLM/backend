@@ -1,0 +1,176 @@
+{% extends "blank.html" %}
+{% block title %}
+<title>Machines - AUSLM</title>
+{% endblock %}
+
+{% block styles%}
+<link href="/static/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block page %}
+MACHINES
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+            <a href="#collapse_card_add_machine" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapse_card_add_machine">
+                <h6 class="m-0 font-weight-bold text-primary">Add machine</h6>
+            </a>
+                <!-- Card Content - Collapse -->
+            <div class="collapse hide" id="collapse_card_add_machine">
+                <div class="card-body">
+                    <form id="add_form">
+                        <div class="form-group">
+                            <input
+                                id="add_machine_domain"
+                                class="form-control"
+                                placeholder="domain"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <input
+                                id="add_machine_address"
+                                class="form-control"
+                                placeholder="x.x.x.x"
+                                required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="add_machine_button">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+            <a href="#collapse_card_remove_machine" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapse_card_remove_machine">
+                <h6 class="m-0 font-weight-bold text-primary">Remove machine</h6>
+            </a>
+                <!-- Card Content - Collapse -->
+            <div class="collapse hide" id="collapse_card_remove_machine">
+                <div class="card-body">
+                    <form id="remove_form">
+                        <div class="form-group">
+                            <input
+                            id="remove_machine_address"
+                            class="form-control"
+                            placeholder="x.x.x.x"
+                            required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="remove_machine_button">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Domain</th>
+                      <th>Address</th>
+                      <th>Open Web Shell</th>
+                      <th>Connect via SSH</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Domain</th>
+                      <th>Address</th>
+                      <th>Open Web Shell</th>
+                      <th>Connect via SSH</th>
+                      <th>Delete</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    <tr>
+                      <td class="text-center">dev1.company.com</td>
+                      <td class="text-center" class="text-center">11.11.11.11</td>
+                      <td class="text-center text-light"><a class="btn btn-primary btn-icon-split"role="button">
+                            <span class="icon">
+                                <i class="fas fa-arrow-right"></i>
+                            </span>
+                            <span class="text">Open</span>
+                        </a></td>
+                        <td class="text-center"><button type="button" class="btn btn-primary btn-icon-split">
+                            <span class="icon">
+                                <i class="fas fa-paste"></i>
+                            </span>
+                            <span class="text">SSH link</span>
+                        </button></td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-danger btn-icon-split">
+                                <span class="icon">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                <span class="text">Delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">dev2.company.com</td>
+                      <td class="text-center">12.12.12.12</td>
+                      <td class="text-center text-light"><a class="btn btn-primary btn-icon-split"role="button">
+                            <span class="icon">
+                                <i class="fas fa-arrow-right"></i>
+                            </span>
+                            <span class="text">Open</span>
+                        </a></td>
+                        <td class="text-center"><button type="button" class="btn btn-primary btn-icon-split">
+                            <span class="icon">
+                                <i class="fas fa-paste"></i>
+                            </span>
+                            <span class="text">SSH link</span>
+                        </button></td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-danger btn-icon-split">
+                                <span class="icon">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                <span class="text">Delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">dev3.company.com</td>
+                      <td class="text-center">13.13.13.13</td>
+                      <td class="text-center text-light"><a class="btn btn-primary btn-icon-split"role="button">
+                            <span class="icon">
+                                <i class="fas fa-arrow-right"></i>
+                            </span>
+                            <span class="text">Open</span>
+                        </a></td>
+                        <td class="text-center"><button type="button" class="btn btn-primary btn-icon-split">
+                            <span class="icon">
+                                <i class="fas fa-paste"></i>
+                            </span>
+                            <span class="text">SSH link</span>
+                        </button></td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-danger btn-icon-split">
+                                <span class="icon">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                <span class="text">Delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                  </tbody>
+                </table>
+{% endblock %}
+
+{% block extra_js%}
+<!-- Datatables -->
+<script src="/static/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="/static/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Datatables custom script -->
+  <script src="/static/js/datatables.js"></script>
+{% endblock %}

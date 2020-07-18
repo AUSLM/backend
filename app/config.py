@@ -22,10 +22,11 @@ cfg.DB_CONNECTION_STRING = _get_db_connection_string()
 cfg.RUNTIME_FOLDER = os.path.dirname(os.path.abspath(__file__))
 cfg.SCRIPTS_FOLDER = os.getenv('SCRIPT_FOLDER', '{}/scripts'.format(cfg.RUNTIME_FOLDER))
 
-cfg.AD_USE = os.getenv('AD_USE', False)
+cfg.AD_USE = True if os.getenv('AD_SERVER_ADDR') else False
+cfg.AD_SERVER_ADDR = os.getenv('AD_SERVER_ADDR', 'localhost')
+
 cfg.DEFAULT_USER_STATUS = os.getenv('DEFAULT_USER_STATUS')
 
-cfg.AD_SERVER_ADDR = os.getenv('AD_SERVER_ADDR', 'localhost')
 cfg.SITE_ADDR = os.getenv('SITE_ADDR')
 
 cfg.SUPER_ADMIN_MAIL = os.getenv('SUPER_ADMIN_MAIL')

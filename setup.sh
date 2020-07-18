@@ -16,9 +16,6 @@ export HOST=
 # порт приложения
 export PORT=
 
-# Использование Active directory
-export AD_USE=
-
 # временно - линк на сервис (http(s)://адрес:порт)
 export SITE_ADDR=
 

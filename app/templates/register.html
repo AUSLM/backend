@@ -1,0 +1,122 @@
+{% extends "blank_not_login.html" %}
+{% block title %}
+<title>Register - AUSLM</title>
+{% endblock %}
+
+{% block content %}
+
+                            <!-- Nested Row within Card Body -->
+                            <div class="row">
+                                <div class="col-lg-6 d-none d-lg-block">
+                                    <div class="p-5">
+                                        <div class="text-center mb-4">
+                                            <h1 class="h4 text-gray-900">This is AUSLM</h1>
+                                            <p class="text-gray-900">AUth Service for Linux Machines</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-gray-900">Что входит в задачи данного сервиса?</p>
+                                        </div>
+                                        <div>
+                                            <ul>
+                                                <li>
+                                                    Управление пользователями и удаленными машинами
+                                                </li>
+                                                <li>
+                                                    Управление доступами пользователей
+                                                </li>
+                                                <li>
+                                                    Хранение публичных ключей
+                                                </li>
+                                                <li>
+                                                    Автоматизация распространения доступов и ключей
+                                                </li>
+                                                <li>
+                                                    Контроль состояния удаленных машин
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="p-5">
+                                        <div class="text-center">
+                                            <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        </div>
+                                        <form class="user" id="registration_form">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                                    <input
+                                                        id="register_user_surname"
+                                                        type="text"
+                                                        class="form-control form-control-user"
+                                                        placeholder="Surname"
+                                                        required>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input
+                                                        id="register_user_name"
+                                                        type="text"
+                                                        class="form-control form-control-user"
+                                                        placeholder="Name"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <input
+                                                    id="register_user_email"
+                                                    type="email"
+                                                    class="form-control form-control-user"
+                                                    placeholder="E-mail"
+                                                    required>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                                    <input
+                                                        id="register_user_password"
+                                                        type="password"
+                                                        class="form-control form-control-user"
+                                                        placeholder="Password"
+                                                        minlength="4"
+                                                        maxlength="20"
+                                                        required>
+                                                    <div class="help-block">Min 4 characters</div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input
+                                                        id="register_user_password_confirmation"
+                                                        type="password"
+                                                        class="form-control form-control-user"
+                                                        placeholder="Confirm password"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-user btn-block" id="registration_form_submit_button">
+                                                Register
+                                            </button>
+                                        </form>
+
+                                        
+
+                                        <hr />
+
+                                        {% if not AD_USE %}
+                                        <div class="text-center">
+                                            <a class="small" href="/reset_password">Forgot Password?</a>
+                                        </div>
+                                        {% endif %}
+                                        <div class="text-center">
+                                            <a class="small" href="/login">Have an account?</a>
+                                        </div>
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script src="/static/js/auslm/register.js"></script>
+{% endblock %}
