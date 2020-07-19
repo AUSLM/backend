@@ -75,3 +75,10 @@ add_machine = Schema(
     },
     ignore_extra_keys=True
 )
+
+remove_machine = Schema(
+    {
+        'address': Use(str),
+    },
+    ignore_extra_keys=True
+)

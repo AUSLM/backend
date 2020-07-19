@@ -50,7 +50,7 @@ def add_machine(e_email, addr, domain):
     logging.info('Adding machine [{} - {}]'.format(domain, addr))
 
 
-def delete_machine(e_email, address):
+def remove_machine(e_email, address):
     with get_session() as s:
         machine = s.query(Machine).filter(
                 Machine.address == address,
