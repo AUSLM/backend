@@ -16,7 +16,7 @@ def upload_public_key(u_id, key, description):
     with get_session() as s:
         user = s.query(User).get(u_id)
         if not user:
-            abort(404, "User with this id not found.")
+            abort(404, "User not found.")
 
         public_key = s.query(PublicKey).filter(
                 PublicKey.body == key
@@ -40,7 +40,7 @@ def delete_public_key(e_email, u_email, k_id):
                 PublicKey.status == 'active'
         ).one_or_none()
         if not public_key:
-            abort(404, 'Key with this id not found.')
+            abort(404, 'Key not found.')
 
         public_key.status = 'deleted'
         logging.info('Deleting public key for user [{}]'.format(u_email))

@@ -94,18 +94,23 @@ def get_machine_users(addr):
                 Access.status == 'active',
         ).all()
         for user, access, _ in machine_users:
-            result[user.id] = {
-                'login': user.login,
+            result.append({
+                'email': user.email,
                 'name': user.name,
                 'surname': user.surname,
-                'admin': user.admin,
-            }
+                'service_status': user.service_status,
+            })
     return result
 
 
 def get_domain(addr):
     with get_session() as s:
-        return s.query(Machine).filter(
+        machine =  s.query(Machine).filter(
                 Machine.address == addr,
                 Machine.status == 'active'
-        ).first().domain
+        ).one_or_none()
+
+        if not machine:
+            abort(404, 'Machine not found')
+
+        return machine.domain

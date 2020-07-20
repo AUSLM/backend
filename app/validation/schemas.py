@@ -82,3 +82,19 @@ remove_machine = Schema(
     },
     ignore_extra_keys=True
 )
+
+grant_access = Schema(
+    {
+        'email': Use(str),
+        'address': Use(str),
+    },
+    ignore_extra_keys=True
+)
+
+revoke_access = Schema(
+    {
+        'email': Use(str),
+        'address': Use(str),
+    },
+    ignore_extra_keys=True
+)

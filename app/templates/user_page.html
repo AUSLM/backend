@@ -1,6 +1,6 @@
 {% extends "blank.html" %}
 {% block title %}
-<title>Machines - AUSLM</title>
+<title>{{user.email}} - AUSLM</title>
 {% endblock %}
 
 {% block styles%}
@@ -8,65 +8,15 @@
 {% endblock %}
 
 {% block page %}
-MACHINES
+{{user.email}}
 {% endblock %}
 
 {% block content %}
 
-<div class="row">
-    <div class="col-lg-6">
-        <div class="card shadow mb-4">
-            <a href="#collapse_card_add_machine" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapse_card_add_machine">
-                <h6 class="m-0 font-weight-bold text-primary">Add machine</h6>
-            </a>
-                <!-- Card Content - Collapse -->
-            <div class="collapse hide" id="collapse_card_add_machine">
-                <div class="card-body">
-                    <form id="add_form">
-                        <div class="form-group">
-                            <input
-                                id="add_machine_domain"
-                                class="form-control"
-                                placeholder="domain"
-                                required>
-                        </div>
-                        <div class="form-group">
-                            <input
-                                id="add_machine_address"
-                                class="form-control"
-                                placeholder="x.x.x.x"
-                                required>
-                        </div>
-                        <button type="submit" class="btn btn-primary" id="add_machine_button">Add</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="card shadow mb-4">
-            <a href="#collapse_card_remove_machine" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapse_card_remove_machine">
-                <h6 class="m-0 font-weight-bold text-primary">Remove machine</h6>
-            </a>
-                <!-- Card Content - Collapse -->
-            <div class="collapse hide" id="collapse_card_remove_machine">
-                <div class="card-body">
-                    <form id="remove_form">
-                        <div class="form-group">
-                            <input
-                            id="remove_machine_address"
-                            class="form-control"
-                            placeholder="x.x.x.x"
-                            required>
-                        </div>
-                        <button type="submit" class="btn btn-primary" id="remove_machine_button">Remove</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{user.name}} {{user.surname}}</h1>
+    <h1 class="h3 mb-0 text-gray-800">{{user.service_status}}</h1>
 </div>
-
 
 <div class="card shadow mb-4">
     <div class="card-body">
@@ -112,7 +62,7 @@ MACHINES
                                 <span class="icon">
                                     <i class="fas fa-trash"></i>
                                 </span>
-                                <span class="text">Delete</span>
+                                <span class="text">Revoke</span>
                             </button>
                         </td>
                     </tr>
@@ -122,6 +72,8 @@ MACHINES
             </div>
         </div>
     </div>
+
+
 {% endblock %}
 
 {% block extra_js%}
@@ -131,7 +83,4 @@ MACHINES
 
 <!-- Datatables custom script -->
 <script src="/static/js/datatables.js"></script>
-
-<script src="/static/js/auslm/add_machine.js"></script>
-<script src="/static/js/auslm/remove_machine.js"></script>
 {% endblock %}

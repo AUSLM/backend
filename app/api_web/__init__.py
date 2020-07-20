@@ -22,6 +22,15 @@ def get_json():
     return data
 
 
+def make_404(e):
+    error = e.description
+    if int(str(e.description).find('The requested URL')) + 1:
+        error = 'Unknown route'
+        logging.warning('404 - [{}]'.format(error))
+    print(error)
+    return jsonify(error=error), 404
+
+
 def make_405(e):
     logging.warning('405 - [{}]'.format(e))
     return jsonify(error="Wrong route method"), 405

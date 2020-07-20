@@ -16,7 +16,7 @@ def get_user_info(u_email):
     with get_session() as s:
         user = s.query(User).filter(
                 User.email == u_email
-        )
+        ).one_or_none()
         if not user:
             abort(404, 'No user with this id')
 

@@ -37,8 +37,8 @@ def register():
         return make_4xx(409, 'User is currently authenticated')
 
     data = validate(get_json(), schemas.register)
-    accounts_logic.register_user(data['email'], data['name'],
-                                 data['surname'], data['password'])
+    accounts_logic.register_user(data['email'], data['password'],
+                                 data['name'], data['surname'])
     return make_ok(201, 'User was registered')
 
 

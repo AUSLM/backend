@@ -1,0 +1,71 @@
+{% extends "blank.html" %}
+{% block title %}
+<title>Manage accesses - AUSLM</title>
+{% endblock %}
+
+{% block page %}
+MANAGE ACCESSES
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Grant</h6>
+            </div>
+            <div class="card-body">
+                <form id="grant_form">
+                    <div class="form-group">
+                        <input
+                            id="grant_email"
+                            class="form-control"
+                            placeholder="e-mail"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input
+                            id="grant_address"
+                            class="form-control"
+                            placeholder="x.x.x.x"
+                            required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="grant_access_button">Grant</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Revoke</h6>
+            </div>
+            <div class="card-body">
+                <form id="revoke_form">
+                    <div class="form-group">
+                        <input
+                            id="revoke_email"
+                            class="form-control"
+                            placeholder="e-mail"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input
+                            id="revoke_address"
+                            class="form-control"
+                            placeholder="x.x.x.x"
+                            required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="revoke_access_button">Revoke</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/auslm/grant_access.js"></script>
+<script src="/static/js/auslm/revoke_access.js"></script>
+{% endblock %}

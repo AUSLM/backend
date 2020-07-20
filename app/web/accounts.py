@@ -38,13 +38,6 @@ def register():
     )
 
 
-@bp.route('/404')
-def d500():
-    return render_template(
-        '/404.html'
-    )
-
-
 @bp.route('/')
 @login_required
 def home():

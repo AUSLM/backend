@@ -14,6 +14,8 @@ bp = Blueprint('machines_web', __name__)
 @bp.route('/management/machines')
 @login_required
 def manage_machines():
+    if current_user.service_status == 'user':
+        abort(404, "No rights")
     return render_template(
         '/manage_machines.html',
         current_user=current_user
@@ -32,4 +34,21 @@ def machines():
         '/machines.html',
         current_user=current_user,
         machines=machines
+    )
+
+
+@bp.route('/machine/<string:address>')
+@login_required
+def machine_page(address):
+    if current_user.service_status == 'user':
+        abort(404, "No rights")
+    domain = machines_logic.get_domain(address)
+    users = machines_logic.get_machine_users(address)
+
+    return render_template(
+        '/machine_page.html',
+        current_user=current_user,
+        address=address,
+        domain=domain,
+        users=users
     )

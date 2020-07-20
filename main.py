@@ -14,11 +14,12 @@ def main():
 
     parser = ArgumentParser(description='HASLM project server')
 
+    parser.add_argument('role', metavar='role', type=str,
+                        help='A role of application instance: server or controller')
     parser.add_argument('--create-tables', action='store_true',
                         dest='create_tables',
                         help='Creates data base tables before launch.')
-    parser.add_argument('role', metavar='role', type=str,
-                        help='A role of application instance: server or controller')
+
     args = parser.parse_args()
 
     logging.info('Starting server')

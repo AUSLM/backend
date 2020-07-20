@@ -32,7 +32,7 @@ def unauthorized_handler(e):
 
 def not_found_handler(e):
     if request.path.startswith('/api/'):
-        make_4xx(404, "Unknown route")
+        return make_404(e)
     else:
         if request.path.startswith('/user/'):
             return web_404(e, "User")
