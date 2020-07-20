@@ -98,3 +98,10 @@ revoke_access = Schema(
     },
     ignore_extra_keys=True
 )
+
+manage_admin = Schema(
+    {
+        'email': Use(str),
+    },
+    ignore_extra_keys=True
+)

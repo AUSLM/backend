@@ -45,3 +45,16 @@ def home():
         '/blank.html',
         current_user=current_user
     )
+
+
+@bp.route('/permissions')
+@login_required
+def permissions():
+    if current_user.service_status == 'user':
+        abort(404, "No rights")
+    admins = accounts_logic.get_admins()
+    return render_template(
+        '/permissions.html',
+        current_user=current_user,
+        admins=admins
+    )

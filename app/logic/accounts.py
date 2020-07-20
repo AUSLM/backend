@@ -161,3 +161,20 @@ def change_privileges(u_email, role):
             else:
                 access = Access(u_id=user.id, m_id=machine.id)
                 s.add(access)
+
+
+def get_admins():
+    result = []
+    with get_session() as s:
+        admins = s.query(User).filter(
+                User.status == 'active',
+                User.service_status == 'admin'
+        ).all()
+
+        for admin in admins:
+            result.append({
+                'email': admin.email,
+                'name': admin.name,
+                'surname': admin.surname
+            })
+    return result

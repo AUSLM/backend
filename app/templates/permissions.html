@@ -1,0 +1,92 @@
+{% extends "blank.html" %}
+{% block title %}
+<title>Permissions - AUSLM</title>
+{% endblock %}
+
+{% block styles%}
+<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block page %}
+PERMISSIONS (admins)
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <form id="admins_form">
+            <div class="form-group row mb-0">
+                <div class="col-sm-9 mb-0 mb-sm-0">
+                    <input
+                        id="admin_email"
+                        class="form-control"
+                        placeholder="E-mail"
+                        required>
+                </div>
+                <div class="col-sm-3 mb-0 mb-sm-0 text-center">
+                    <button class="btn btn-primary mb-0" onclick="grant_admin_function()" id="grant_admin_button">Grant</button>
+                    <button class="btn btn-primary mb-0" onclick="remove_admin_function()" id="remove_admin_button">Remove</button>
+                </div>  
+            </div>              
+        </form>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Admins</h6>
+    </div>
+    <div class="card-body">
+<div class="table-responsive" id="machines_table">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                        <th>E-mail</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Remove</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                        <th>E-mail</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Remove</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    {% for admin in admins %}
+                    <tr>
+                        <td class="text-center"><a class="btn btn-link" href="/user/{{admin.email}}" role="button">{{admin.email}}</a></td>
+                        <td class="text-center" class="text-center">{{admin.name}}</td>
+                        <td class="text-center" class="text-center">{{admin.surname}}</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-danger btn-icon-split">
+                                <span class="icon">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                <span class="text">Remove</span>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js%}
+<!-- Datatables -->
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- Datatables custom script -->
+<script src="/static/js/datatables.js"></script>
+
+<script src="/static/js/auslm/grant_admin.js"></script>
+<script src="/static/js/auslm/remove_admin.js"></script>
+{% endblock %}

@@ -1,0 +1,55 @@
+function remove_admin_function() {
+
+    var form = document.getElementById('admins_form')
+    var button = document.getElementById('remove_admin_button')
+
+    button.disabled = true
+
+    fetch(
+        '/api/remove_admin',
+        {
+            method: 'POST',
+            body: JSON.stringify(
+                {
+                    email: document.getElementById('admin_email').value
+                }
+            ),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    ).then(
+        response => {
+            if (response.status < 200 || response.status >= 300) {
+                button.disabled = true
+                return response.json().then(
+                    data => Promise.reject(data['error'])
+                )
+            }
+            return response.json()
+        }
+    ).then(
+        body => {
+            button.textContent = body['description']
+            setTimeout(
+                () => {
+                    button.disabled = false
+                    button.textContent = 'Remove'
+                    form.reset()
+                },
+                750
+            )
+        }
+    ).catch(
+        error => {
+            button.textContent = error
+            setTimeout(
+                () => {
+                    button.disabled = false
+                    button.textContent = 'Remove'
+                },
+                750
+            )
+        }
+    )
+}

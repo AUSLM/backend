@@ -46,3 +46,23 @@ def register():
 def confirm(link):
     accounts_logic.confirm_user(link)
     return make_ok(200, 'User was confirmed')
+
+
+@bp.route('/add_admin', methods=['POST'])
+@login_required
+def add_admin():
+    if current_user.service_status != 'superadmin':
+        return make_4xx(404, 'Unknown route')
+    data = validate(get_json(), schemas.manage_admin)
+    accounts_logic.change_privileges(data['email'], 'admin')
+    return make_ok(200, "Admin rights was granted")
+
+
+@bp.route('/remove_admin', methods=['POST'])
+@login_required
+def remove_admin():
+    if current_user.service_status != 'superadmin':
+        return make_4xx(404, 'Unknown route')
+    data = validate(get_json(), schemas.manage_admin)
+    accounts_logic.change_privileges(data['email'], 'user')
+    return make_ok(200, "Admin rights was removed")
