@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    var form = document.getElementById('add_form')
+    var form = document.getElementById('add_machine_form')
     var button = document.getElementById('add_machine_button')
 
     form.addEventListener('submit', event => {
@@ -15,14 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'POST',
                 body: JSON.stringify(
                     {
-                        domain:
-                            document
-                                .getElementById('add_machine_domain')
-                                    .value,
-                        address: 
-                            document
-                                .getElementById('add_machine_address')
-                                    .value
+                        domain: document.getElementById('add_machine_domain').value,
+                        address: document.getElementById('add_machine_address').value
                     }
                 ),
                 headers: {
@@ -33,12 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             response => {
                 if (response.status < 200 || response.status >= 300) {
                     return response.json().then(
-                        data => Promise.reject(
-                            {
-                                code: response.status,
-                                message: data['error']
-                            }
-                        )
+                        data => Promise.reject(data['error'])
                     )
                 }
                 return response.json()
@@ -55,10 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     750
                 )
             }
-        )
-        .catch(
+        ).catch(
             error => {
-                button.textContent = error.message
+                button.textContent = error
                 setTimeout(
                     () => {
                         button.disabled = false
@@ -68,7 +56,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 )
             }
         )
-
     })
-
 })

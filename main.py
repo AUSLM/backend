@@ -29,7 +29,7 @@ def main():
         cfg.SUPER_ADMIN_PASSWORD = ''
         db.create_tables(pw.decode('utf-8'))
     if args.role == 'server':
-        logging.info('Starting server')
+        logging.info('Starting HTTP server')
         app.run()
     elif args.role == 'controller':
         logging.info('Starting controller')

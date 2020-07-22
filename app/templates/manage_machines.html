@@ -16,19 +16,19 @@ MANAGE MACHINES
                 <h6 class="m-0 font-weight-bold text-primary">Add machine</h6>
             </div>
             <div class="card-body">
-                <form id="add_form">
+                <form id="add_machine_form">
+                    <div class="form-group">
+                        <input
+                            id="add_machine_address"
+                            class="form-control"
+                            placeholder="address - x.x.x.x"
+                            required>
+                    </div>
                     <div class="form-group">
                         <input
                             id="add_machine_domain"
                             class="form-control"
                             placeholder="domain"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <input
-                            id="add_machine_address"
-                            class="form-control"
-                            placeholder="x.x.x.x"
                             required>
                     </div>
                     <button type="submit" class="btn btn-primary" id="add_machine_button">Add</button>
@@ -42,7 +42,7 @@ MANAGE MACHINES
                 <h6 class="m-0 font-weight-bold text-primary">Remove machine</h6>
             </div>
             <div class="card-body">
-                <form id="remove_form">
+                <form id="remove_machine_form">
                     <div class="form-group">
                         <input
                             id="remove_machine_address"

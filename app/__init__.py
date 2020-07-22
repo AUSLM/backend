@@ -64,5 +64,5 @@ logging.basicConfig(format='[%(asctime)s] [%(levelname)s] %(message)s',
 def run():
     monkey.patch_all(ssl=False)
     http_server = WSGIServer((cfg.HOST, cfg.PORT), app)
-    logging.info('Started server')
+    logging.info('Started HTTP server')
     http_server.serve_forever()

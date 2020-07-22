@@ -27,7 +27,6 @@ def make_404(e):
     if int(str(e.description).find('The requested URL')) + 1:
         error = 'Unknown route'
         logging.warning('404 - [{}]'.format(error))
-    print(error)
     return jsonify(error=error), 404
 
 
