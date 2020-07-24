@@ -115,3 +115,38 @@ def get_domain(addr):
             abort(404, 'Machine not found')
 
         return machine.domain
+
+
+def web_terminal(U_email, address):
+    with get_session() as s:
+        access_exist = s.query(User, Access, Machine).filter(
+                User.id == Access.u_id,
+                Access.m_id == Machine.id,
+                User.email == U_email,
+                Machine.address == address,
+                Access.status == 'active',
+                Machine.status == 'active',
+                User.status == 'active'
+        ).one_or_none()
+
+        if not access_exist:
+            abort(409, 'No access')
+
+        temp_password = nanoid.generate(size=20)
+
+        machine = s.query(Machine).filter(
+                Machine.address == address
+        ).one_or_none()
+
+        if not machine:
+            abort(404, "Machine not found")
+
+        #script = get_script(s, 'set_password')
+        #executor.execute(machines, script, env={
+        #    "LOGIN": login,
+        #    "PASSWORD": temp_password
+        #})
+        return {
+            "url": "http://{}:7080".format(address),
+            "password": temp_password,
+        }

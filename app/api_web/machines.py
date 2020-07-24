@@ -28,3 +28,10 @@ def remove_machine():
     data = validate(get_json(), schemas.remove_machine)
     machines_logic.remove_machine(current_user.email, data['address'])
     return make_ok(200, "Machine was removed")
+
+
+@bp.route('/web_terminal', methods=['POST'])
+@login_required
+def web_terminal():
+    data = validate(get_json(), schemas.web_terminal)
+    return machines_logic.web_terminal(current_user.email, data['address'])

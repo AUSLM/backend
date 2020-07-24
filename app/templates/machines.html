@@ -23,7 +23,9 @@ MACHINES
                         <th>Address</th>
                         <th>Open Web Shell</th>
                         <th>Connect via SSH</th>
+                        {% if current_user.service_status != 'user' %}
                         <th>Delete</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tfoot>
@@ -32,23 +34,29 @@ MACHINES
                         <th>Address</th>
                         <th>Open Web Shell</th>
                         <th>Connect via SSH</th>
+                        {% if current_user.service_status != 'user' %}
                         <th>Delete</th>
+                        {% endif %}
                     </tr>
                 </tfoot>
                 <tbody>
                     {% for machine in machines %}
                     <tr>
-                        <td class="text-center"><a class="btn btn-link" href="/machine/{{machine.address}}" role="button">{{machine.domain}}</a></td>
-                        <td class="text-center" class="text-center">{{machine.address}}</td>
-                        <td class="text-center text-light">
-                            <a class="btn btn-primary btn-icon-split" role="button">
+                        <td class="text-center align-middle">
+                            {% if current_user.service_status != 'user' %}
+                            <a id="machine_link" class="btn btn-link" href="/machine/{{machine.address}}" role="button">{{machine.domain}}</a>
+                            {% else %} {{machine.domain}} {% endif %}
+                        </td>
+                        <td class="text-center align-middle">{{machine.address}}</td>
+                        <td class="text-center align-middle text-light">
+                            <button class="btn btn-primary btn-icon-split" id="web_terminal_button" onclick="get_web_terminal_function(this)" machine_address={{machine.address}} type="button">
                                 <span class="icon">
                                     <i class="fas fa-arrow-right"></i>
                                 </span>
-                                <span class="text">Open</span>
-                            </a>
+                                <span id="button_text" class="text">Open</span>
+                            </button>
                         </td>
-                        <td class="text-center">
+                        <td class="text-center align-middle">
                             <button type="button" class="btn btn-primary btn-icon-split" id="ssh_addr_copy_button" onclick="ssh_addr_copy(this)" ssh_addr="{{current_user.email}}@{{machine.address}}:22">
                                 <span class="icon">
                                     <i class="fas fa-paste"></i>
@@ -56,14 +64,16 @@ MACHINES
                                 <span class="text">SSH link</span>
                             </button>
                         </td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-danger btn-icon-split" disabled>
+                        {% if current_user.service_status != 'user' %}
+                        <td class="text-center align-middle">
+                            <button type="button" onclick="remove_machine_function(this)" class="btn btn-danger btn-icon-split" machine_address={{machine.address}} >
                                 <span class="icon">
                                     <i class="fas fa-trash"></i>
                                 </span>
-                                <span class="text">Delete</span>
+                                <span id="button_text" class="text">Remove</span>
                             </button>
                         </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -83,4 +93,6 @@ MACHINES
 <script src="/static/js/datatables.js"></script>
 
 <script src="/static/js/auslm/ssh_addr_copy.js"></script>
+<script src="/static/js/auslm/get_web_terminal.js"></script>
+<script src="/static/js/auslm/remove_machine_table.js"></script>
 {% endblock %}

@@ -121,3 +121,10 @@ remove_key = Schema(
     },
     ignore_extra_keys=True
 )
+
+web_terminal = Schema(
+    {
+        'address': Use(str),
+    },
+    ignore_extra_keys=True
+)
