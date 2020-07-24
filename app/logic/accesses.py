@@ -35,7 +35,8 @@ def grant_access(e_email, u_email, addr):
 
         if access:
             if access.status == 'deleted':
-                access.status == 'active'
+                access.status = 'active'
+                access.issued = datetime.utcnow()
         else:
             access = Access(u_id=user.id, m_id=machine.id)
             s.add(access)

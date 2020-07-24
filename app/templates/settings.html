@@ -99,10 +99,10 @@ SETTINGS
                   <tbody>
                     {% for key in keys %}
                     <tr>
-                        <td class="text-center">{{key.name}}</td>
-                        <td class="text-center">{{key.key}}</td>
-                        <td class="text-center">{{key.update_time}}</td>
-                        <td class="text-center">
+                        <td class="text-center align-middle">{{key.name}}</td>
+                        <td class="text-center align-middle">{{key.key}}</td>
+                        <td class="text-center align-middle">{{key.update_time}}</td>
+                        <td class="text-center align-middle">
                             <button type="button" onclick="delete_key_function(this)" class="btn btn-danger btn-icon-split" ssh_key_id={{key.id}} user_email={{current_user.email}}>
                                 <span class="icon">
                                     <i class="fas fa-trash"></i>

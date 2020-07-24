@@ -38,11 +38,11 @@ USERS
                 <tbody>
                     {% for user in users %}
                     <tr>
-                        <td class="text-center"><a class="btn btn-link" href="/user/{{user.email}}" role="button">{{user.email}}</a></td>
-                        <td class="text-center" class="text-center">{{user.name}}</td>
-                        <td class="text-center" class="text-center">{{user.surname}}</td>
-                        <td class="text-center" class="text-center">{{user.service_status}}</td>
-                        <td class="text-center">
+                        <td class="text-center align-middle"><a class="btn btn-link" href="/user/{{user.email}}" role="button">{{user.email}}</a></td>
+                        <td class="text-center align-middle" class="text-center">{{user.name}}</td>
+                        <td class="text-center align-middle" class="text-center">{{user.surname}}</td>
+                        <td class="text-center align-middle" class="text-center">{{user.service_status}}</td>
+                        <td class="text-center align-middle">
                             <button type="button" class="btn btn-danger btn-icon-split">
                                 <span class="icon">
                                     <i class="fas fa-trash"></i>

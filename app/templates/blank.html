@@ -39,11 +39,10 @@
                     <div class="sidebar-brand-text mx-2">AUSLM</div>
                 </a>
 
-
-                {% if current_user.service_status != 'user' %}
-
                 <!-- Divider -->
                 <hr class="sidebar-divider" />
+
+                {% if current_user.service_status != 'user' %}
 
                 <!-- Heading -->
                 <div class="sidebar-heading">
