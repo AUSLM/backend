@@ -74,16 +74,16 @@ def get_jwt(token):
     payload = {
         'jti': str(token.id),
         'iat': token.issued,
-        'uid': token.vmuser_id,
+        'uid': token.u_id,
     }
     t = jwt.encode(payload, 'secret', 'HS256').decode('utf-8')
     return t
 
 
-def get_token(user):
+def get_token(u_id):
     with get_session() as s:
         token = s.query(Token).filter(
-                Token.vmuser_id == user.id,
+                Token.u_id == u_id,
                 Token.status == 'active'
         ).one_or_none()
         if not token:
@@ -91,16 +91,17 @@ def get_token(user):
         return get_jwt(token)
 
 
-def issue_token(user):
+def reissue_token(u_id):
     with get_session() as s:
         old_token = s.query(Token).filter(
-                Token.vmuser_id == user.id,
+                Token.u_id == u_id,
                 Token.status == 'active'
         ).one_or_none()
         if old_token:
             old_token.status = 'deleted'
         token = Token()
-        token.vmuser_id = user.id
+        token.u_id = u_id
         s.add(token)
         s.flush()
+        s.refresh(token)
         return get_jwt(token)

@@ -105,3 +105,19 @@ manage_admin = Schema(
     },
     ignore_extra_keys=True
 )
+
+add_key = Schema(
+    {
+        'name': Use(str),
+        'key': Use(str),
+    },
+    ignore_extra_keys=True
+)
+
+remove_key = Schema(
+    {
+        'u_email': Use(str),
+        'k_id': Use(int),
+    },
+    ignore_extra_keys=True
+)

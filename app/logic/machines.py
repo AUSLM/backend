@@ -92,6 +92,7 @@ def get_machine_users(addr):
                 Access.m_id == Machine.id,
                 Machine.address == addr,
                 Access.status == 'active',
+                User.service_status == 'user'
         ).all()
         for user, access, _ in machine_users:
             result.append({

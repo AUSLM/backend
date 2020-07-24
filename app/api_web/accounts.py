@@ -3,7 +3,7 @@ from flask_login import (login_required, login_user, logout_user, current_user)
 
 from . import *
 from ..logic import accounts as accounts_logic
-from ..auth import pre_login
+from ..auth import pre_login, reissue_token
 from ..validation.validation import validate
 from ..validation import schemas
 
@@ -46,6 +46,15 @@ def register():
 def confirm(link):
     accounts_logic.confirm_user(link)
     return make_ok(200, 'User was confirmed')
+
+
+@bp.route('/issue_token', methods=['GET'])
+@login_required
+def issue_token():
+    if current_user.service_status == 'user':
+        return make_4xx(404, 'Unknown route')
+    token = reissue_token(current_user.id)
+    return make_ok(200, token)
 
 
 @bp.route('/add_admin', methods=['POST'])

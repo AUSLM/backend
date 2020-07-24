@@ -58,6 +58,8 @@ def revoke_access(e_email, u_email, addr):
             abort(404, 'User not found')
         if not machine:
             abort(404, 'Machine not found')
+        if user.service_status != 'user':
+            abort(409, "Can't revoke access from admins!")
 
         access = s.query(Access).filter(
                 Access.u_id == user.id,

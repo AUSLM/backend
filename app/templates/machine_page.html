@@ -22,7 +22,6 @@
                         <th>E-mail</th>
                         <th>Name</th>
                         <th>Surname</th>
-                        <th>Service status</th>
                         <th>Revoke</th>
                     </tr>
                 </thead>
@@ -31,7 +30,6 @@
                         <th>E-mail</th>
                         <th>Name</th>
                         <th>Surname</th>
-                        <th>Service status</th>
                         <th>Revoke</th>
                     </tr>
                 </tfoot>
@@ -41,9 +39,8 @@
                         <td class="text-center"><a class="btn btn-link" href="/user/{{user.email}}" role="button">{{user.email}}</a></td>
                         <td class="text-center" class="text-center">{{user.name}}</td>
                         <td class="text-center" class="text-center">{{user.surname}}</td>
-                        <td class="text-center" class="text-center">{{user.service_status}}</td>
                         <td class="text-center">
-                            <button type="button" class="btn btn-danger btn-icon-split">
+                            <button type="button" class="btn btn-danger btn-icon-split" disabled>
                                 <span class="icon">
                                     <i class="fas fa-trash"></i>
                                 </span>

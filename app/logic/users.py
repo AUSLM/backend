@@ -40,8 +40,8 @@ def get_user_keys(u_email):
         for _, key in keys:
             result.append({
                 'id': key.id,
-                'key': key.body,
-                'description': key.description,
+                'key': key.key,
+                'name': key.name,
                 'update_time': key.update_time,
             })
     return result
@@ -71,7 +71,8 @@ def get_users(status):
     result = []
     with get_session() as s:
         users = s.query(User).filter(
-                User.status == status
+                User.status == status,
+                User.service_status != 'superadmin'
         ).all()
         for user in users:
             result.append({

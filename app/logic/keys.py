@@ -12,23 +12,22 @@ from ..db import *
 from .. import mails
 
 
-def upload_public_key(u_id, key, description):
+def upload_public_key(u_id, key, name):
     with get_session() as s:
         user = s.query(User).get(u_id)
         if not user:
             abort(404, "User not found.")
 
         public_key = s.query(PublicKey).filter(
-                PublicKey.body == key
+                PublicKey.key == key
         ).one_or_none()
 
         if public_key:
             public_key.status = 'active'
-            public_key.description = description
+            public_key.name = name
             public_key.update_time = datetime.utcnow()
         else:
-            new_public_key = PublicKey(u_id=u_id, body=key,
-                               description=description)
+            new_public_key = PublicKey(u_id=u_id, key=key, name=name)
             s.add(new_public_key)
         logging.info('Uploading new public key for user [{}]'.format(user.email))
 

@@ -67,8 +67,8 @@ class PublicKey(Base):
     u_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     status = Column(Status, default='active', nullable=False)
 
-    body = Column(String, unique=True, nullable=False)
-    description = Column(String, nullable=False)
+    key = Column(String, unique=True, nullable=False)
+    name = Column(String, nullable=False)
     update_time = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 

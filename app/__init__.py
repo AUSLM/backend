@@ -18,7 +18,8 @@ from .web import (accounts as accounts_web,
 from .api_web import (accounts as accounts_api,
                       machines as machines_api,
                       users as users_api,
-                      accesses as accesses_api)
+                      accesses as accesses_api,
+                      keys as keys_api)
 
 from .errors import add_error_handlers, on_json_loading_failed
 
@@ -46,6 +47,7 @@ app.register_blueprint(accounts_api.bp, url_prefix='/api')
 app.register_blueprint(machines_api.bp, url_prefix='/api')
 app.register_blueprint(users_api.bp, url_prefix='/api')
 app.register_blueprint(accesses_api.bp, url_prefix='/api')
+app.register_blueprint(keys_api.bp, url_prefix='/api')
 
 add_error_handlers(app)
 Request.on_json_loading_failed = on_json_loading_failed

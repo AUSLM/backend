@@ -4,6 +4,7 @@ from flask_login import (login_required, login_user, logout_user, current_user)
 
 from ..logic import users as users_logic, machines as machines_logic
 from ..config import cfg
+from ..auth import get_token
 
 import logging
 
@@ -48,4 +49,21 @@ def user_page(email):
         current_user=current_user,
         user=user,
         machines=machines
+    )
+
+
+@bp.route('/settings')
+@login_required
+def settings():
+    keys = users_logic.get_user_keys(current_user.email)
+
+    jwt_token = None
+    if current_user != 'user':
+        jwt_token = get_token(current_user.id)
+
+    return render_template(
+        '/settings.html',
+        current_user=current_user,
+        keys=keys,
+        jwt_token=jwt_token
     )
