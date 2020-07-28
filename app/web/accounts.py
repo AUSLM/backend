@@ -38,15 +38,6 @@ def register():
     )
 
 
-@bp.route('/')
-@login_required
-def home():
-    return render_template(
-        '/blank.html',
-        current_user=current_user
-    )
-
-
 @bp.route('/permissions')
 @login_required
 def permissions():

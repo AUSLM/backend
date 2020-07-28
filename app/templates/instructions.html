@@ -1,0 +1,55 @@
+{% extends "blank.html" %}
+{% block title %}
+<title>Instructions - AUSLM</title>
+{% endblock %}
+
+{% block page %}
+INSTRUCTIONS
+{% endblock %}
+
+{% block content %}
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Generating a new SSH key</h6>
+    </div>
+    <div class="card-body">
+        <p>1. Open Terminal.</p>
+        <p>2. Paste the text below, substituting in your GitHub email address.</p>
+        <div class="mb-2">
+            <code>$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"</code>
+        </div>
+        <p>This creates a new ssh key, using the provided email as a label.</p>
+        <div class="mb-2">
+            <code>Generating public/private rsa key pair.</code>
+        </div>
+        <p>3. When you're prompted to "Enter a file in which to save the key," press Enter. This accepts the default file location.</p>
+        <div class="mb-2">
+            <code>Enter a file in which to save the key (/home/you/.ssh/id_rsa): [Press enter]</code>
+        </div>
+        <p>4. At the prompt, type a secure passphrase.</p>
+        <div class="mb-2">
+            <code>Enter passphrase (empty for no passphrase): [Type a passphrase]</code>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Adding your SSH key to the ssh-agent</h6>
+    </div>
+    <div class="card-body">
+        <p>1. Start the ssh-agent in the background.</p>
+        <div class="mb-2">
+            <code>$ eval "$(ssh-agent -s)"</code>
+        </div>
+        <p>2. Add your SSH private key to the ssh-agent. If you created your key with a different name, or if you are adding an existing key that has a different name, replace id_rsa in the command with the name of your private key file.</p>
+        <div class="mb-2">
+            <code>$ ssh-add ~/.ssh/id_rsa</code>
+        </div>
+        <p>3. Add the SSH key in your settings.</p>
+    </div>
+</div>
+
+{% endblock %}

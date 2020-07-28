@@ -43,12 +43,14 @@ def user_page(email):
         abort(404, "No rights")
     user = users_logic.get_user_info(email)
     machines = users_logic.get_user_machines(email)
+    keys = users_logic.get_user_keys(email)
 
     return render_template(
         '/user_page.html',
         current_user=current_user,
         user=user,
-        machines=machines
+        machines=machines,
+        keys=keys
     )
 
 
@@ -65,5 +67,6 @@ def settings():
         '/settings.html',
         current_user=current_user,
         keys=keys,
-        jwt_token=jwt_token
+        jwt_token=jwt_token,
+        AD_USE=cfg.AD_USE
     )

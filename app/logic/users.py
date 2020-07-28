@@ -42,7 +42,7 @@ def get_user_keys(u_email):
                 'id': key.id,
                 'key': key.key,
                 'name': key.name,
-                'update_time': key.update_time,
+                'update_time': key.update_time.isoformat(timespec='minutes', sep=' '),
             })
     return result
 
@@ -62,7 +62,7 @@ def get_user_machines(u_email):
                 'id': machine.id,
                 'address': machine.address,
                 'domain': machine.domain,
-                'access_issued': access.issued,
+                'access_issued': access.issued.isoformat(timespec='minutes', sep=' '),
             })
     return result
 
@@ -72,7 +72,7 @@ def get_users(status):
     with get_session() as s:
         users = s.query(User).filter(
                 User.status == status,
-                User.service_status != 'superadmin'
+                User.service_status == 'user'
         ).all()
         for user in users:
             result.append({

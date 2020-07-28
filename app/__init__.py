@@ -13,7 +13,8 @@ from .auth import user_loader, header_loader
 from .web import (accounts as accounts_web,
                   machines as machines_web,
                   users as users_web,
-                  accesses as accesses_web)
+                  accesses as accesses_web,
+                  general as general_web)
 
 from .api_web import (accounts as accounts_api,
                       machines as machines_api,
@@ -42,6 +43,7 @@ app.register_blueprint(accounts_web.bp)
 app.register_blueprint(machines_web.bp)
 app.register_blueprint(users_web.bp)
 app.register_blueprint(accesses_web.bp)
+app.register_blueprint(general_web.bp)
 
 app.register_blueprint(accounts_api.bp, url_prefix='/api')
 app.register_blueprint(machines_api.bp, url_prefix='/api')

@@ -18,14 +18,150 @@ SETTINGS
     <h1 class="h3 mb-0 text-gray-800">{{current_user.service_status}}</h1>
 </div>
 
-{% if current_user.service_status != 'user' %}
-
 <div class="row">
-    <div class="col-lg-8 mb-4">
+    <div class="col-lg-7 mb-4">
 
-{% endif %}
+        <div class="card shadow mb-4">
+            <a href="#collapse_account_settings" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapse_account_settings">
+                <h6 class="m-0 font-weight-bold text-primary">Account settings</h6>
+            </a>
+            <div class="collapse hide" id="collapse_account_settings">
+                <div class="card-body">
+
+                    {% if not AD_USE or current_user.service_status == 'superadmin' %}
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <form id="change_password_form">
+                                <div class="form-group">
+                                    <input
+                                        id="change_password_old_password"
+                                        class="form-control"
+                                        type="password"
+                                        placeholder="old password"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                        id="change_password_new_password"
+                                        class="form-control"
+                                        type="password"
+                                        placeholder="new password"
+                                        minlength="4"
+                                        maxlength="20"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                        id="change_password_new_password_confirm"
+                                        class="form-control"
+                                        type="password"
+                                        placeholder="new password confirm"
+                                        minlength="4"
+                                        maxlength="20"
+                                        required>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="change_password_button">Change password</button>
+                            </form>
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                            <form id="close_sessions_form">
+                                <div class="form-group">
+                                    <input
+                                        id="close_sessions_password"
+                                        class="form-control"
+                                        type="password"
+                                        placeholder="password"
+                                        required>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="close_sessions_button">Close other sessions</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% else %}
+                    <form>
+                        <div class="input-group mb-3">
+                            <input
+                                id="close_sessions_password"
+                                class="form-control"
+                                placeholder="password"
+                                required>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit" id="close_sessions_button">Close other sessions</button>
+                            </div>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
 
 <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Keys</h6>
+    </div>
+    <div class="card-body">
+<div class="table-responsive" id="keys_table">
+                <table class="table table-sm table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Time</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Name</th>
+                      <th>Time</th>
+                      <th></th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    {% for key in keys %}
+                    <tr>
+                        <td class="text-center align-middle">
+                            <a href="" data-toggle="modal" data-target="#ssh_key_modal" onclick="show_key_info_function('{{current_user.email}}', '{{key.id}}')">
+                                {{key.name}}
+                            </a>
+                        </td>
+                        <td class="text-center align-middle">{{key.update_time}}</td>
+                        <td class="text-center align-middle">
+                            <button type="button" onclick="delete_key_function(this)" class="btn btn-danger btn-icon-split">
+                                <span class="icon">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                <span id="button_text" class="text">Delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="col-lg-5 mb-4">
+        <div class="card shadow mb-4">
+            <a href="#collapse_jwt_token" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapse_jwt_token">
+                <h6 class="m-0 font-weight-bold text-primary">JWT Token</h6>
+            </a>
+            <div class="collapse hide" id="collapse_jwt_token">
+                <div class="card-body">
+                    <p id="token_text">
+                    {% if jwt_token %}
+                    {{jwt_token}}
+                    {% else %}
+                    You have never requested for token, press button below
+                    {% endif %}
+                    </p>
+                    <button class="btn btn-primary" onclick="jwt_token_reissue_function()" id="jwt_token_reissue_button">(Re)issue token</button>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Add key</h6>
     </div>
@@ -49,75 +185,34 @@ SETTINGS
         </form>
     </div>
 </div>
-
-
-{% if current_user.service_status != 'user' %}
-
-    </div>
-    <div class="col-lg-4 mb-4">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">JWT Token</h6>
-            </div>
-            <div class="card-body">
-                <p id="token_text">
-                {% if jwt_token %}
-                {{jwt_token}}
-                {% else %}
-                You have never requested for token, press button below
-                {% endif %}
-                </p>
-                <button class="btn btn-primary" onclick="jwt_token_reissue_function()" id="jwt_token_reissue_button">(Re)issue token</button>
-            </div>
-        </div>
     </div>
 </div>
-{% endif %}
 
+{% endblock %}
 
+{% block extra_modals%}
 
-<div class="card shadow mb-4">
-    <div class="card-body">
-<div class="table-responsive" id="keys_table">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Data</th>
-                      <th>Time</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th>Name</th>
-                      <th>Data</th>
-                      <th>Time</th>
-                      <th></th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
-                    {% for key in keys %}
-                    <tr>
-                        <td class="text-center align-middle">{{key.name}}</td>
-                        <td class="text-center align-middle">{{key.key}}</td>
-                        <td class="text-center align-middle">{{key.update_time}}</td>
-                        <td class="text-center align-middle">
-                            <button type="button" onclick="delete_key_function(this)" class="btn btn-danger btn-icon-split" ssh_key_id={{key.id}} user_email={{current_user.email}}>
-                                <span class="icon">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                                <span id="button_text" class="text">Delete</span>
-                            </button>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
+        <div class="modal" id="ssh_key_modal" tabindex="-1" role="dialog" aria-labelledby="ssh_key_modal_Label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ssh_key_modal_Label">Key info</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <p id="key_name_modal" class="font-weight-bold"></p>
+                                <p id="key_data_modal" class="text-wrap"></p>
+                                <p id="key_time_modal"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
 
 {% endblock %}
 
@@ -132,4 +227,8 @@ SETTINGS
 <script src="/static/js/auslm/add_key.js"></script>
 <script src="/static/js/auslm/delete_key.js"></script>
 <script src="/static/js/auslm/jwt_token_reissue.js"></script>
+
+<script src="/static/js/auslm/show_key_info.js"></script>
+<script src="/static/js/auslm/change_password.js"></script>
+<script src="/static/js/auslm/close_sessions.js"></script>
 {% endblock %}

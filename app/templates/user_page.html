@@ -22,6 +22,53 @@
     <div class="col-lg-8">
 
 <div class="card shadow mb-4">
+    <a href="#collapse_card_user_keys" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapse_card_user_keys">
+        <h6 class="m-0 font-weight-bold text-primary">User's keys</h6>
+    </a>
+    <div class="collapse hide" id="collapse_card_user_keys">
+        <div class="card-body">
+            <div class="table-responsive" id="keys_table">
+                <table class="table table-sm table-bordered" id="keysTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Time</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Name</th>
+                      <th>Time</th>
+                      <th></th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    {% for key in keys %}
+                    <tr>
+                        <td class="text-center align-middle">
+                            <a href="" data-toggle="modal" data-target="#ssh_key_modal" onclick="show_key_info_function('{{user.email}}', '{{key.id}}')">{{key.name}}</a>
+                        </td>
+                        <td class="text-center align-middle">{{key.update_time}}</td>
+                        <td class="text-center align-middle">
+                            <button type="button" onclick="delete_key_function(this)" class="btn btn-danger btn-icon-split" ssh_key_id={{key.id}} user_email={{user.email}}>
+                                <span class="icon">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                <span id="button_text" class="text">Delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card shadow mb-4">
     <div class="card-body">
 <div class="table-responsive" id="machines_table">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -103,6 +150,32 @@
 
 {% endblock %}
 
+{% block extra_modals%}
+
+        <div class="modal" id="ssh_key_modal" tabindex="-1" role="dialog" aria-labelledby="ssh_key_modal_Label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ssh_key_modal_Label">Key info</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <p id="key_name_modal" class="font-weight-bold"></p>
+                                <p id="key_data_modal" class="text-wrap"></p>
+                                <p id="key_time_modal"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
+
 {% block extra_js%}
 <!-- Datatables -->
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
@@ -116,4 +189,8 @@
 <script src="/static/js/auslm/revoke_access_table.js"></script>
 
 <script src="/static/js/auslm/grant_access_to_machine_or_user.js"></script>
+
+<script src="/static/js/auslm/delete_key.js"></script>
+
+<script src="/static/js/auslm/show_key_info.js"></script>
 {% endblock %}

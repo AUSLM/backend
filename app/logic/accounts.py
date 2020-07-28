@@ -120,12 +120,29 @@ def close_all_sessions(u_id, password):
             if not ldap_check(email, password):
                 abort(422, 'Invalid password')
         else:
-            opw = str(password).encode('utf-8')
+            ipw = str(password).encode('utf-8')
             pw = str(user.password).encode('utf-8')
-            if not bcrypt.checkpw(opw, pw):
+            if not bcrypt.checkpw(ipw, pw):
                 abort(422, 'Invalid password')
         user.cookie_id = uuid.uuid4()
         return user
+
+
+def self_delete(u_id, password):
+    with get_session() as s:
+        user = s.query(User).filter(
+                User.id == u_id
+        ).one_or_none()
+
+        if cfg.AD_USE:
+            if not ldap_check(email, password):
+                abort(422, 'Invalid password')
+        else:
+            ipw = str(password).encode('utf-8')
+            pw = str(user.password).encode('utf-8')
+            if not bcrypt.checkpw(ipw, pw):
+                abort(422, 'Invalid password')
+        user.status = 'deleted'
 
 
 # for admins

@@ -6,6 +6,7 @@ from ..logic import accounts as accounts_logic
 from ..auth import pre_login, reissue_token
 from ..validation.validation import validate
 from ..validation import schemas
+from ..config import cfg
 
 
 bp = Blueprint('accounts_api_web', __name__)
@@ -55,6 +56,28 @@ def issue_token():
         return make_4xx(404, 'Unknown route')
     token = reissue_token(current_user.id)
     return make_ok(200, token)
+
+
+@bp.route('/change_password', methods=['POST'])
+@login_required
+def change_password():
+    if cfg.AD_USE:
+        abort(409, "Change your password in company's auth system")
+    data = validate(get_json(), schemas.change_password)
+    user = accounts_logic.change_password(current_user.id,
+                                          data['old_password'],
+                                          data['new_password'])
+    login_user(user)
+    return make_ok(200, 'Changed')
+
+
+@bp.route('/close_all_sessions', methods=['POST'])
+@login_required
+def close_all_sessions():
+    data = validate(get_json(), schemas.password)
+    user = accounts_logic.close_all_sessions(current_user.id, data['password'])
+    login_user(user)
+    return make_ok(200, 'Logout from all other sessions')
 
 
 @bp.route('/add_admin', methods=['POST'])
