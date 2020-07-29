@@ -80,6 +80,15 @@ def close_all_sessions():
     return make_ok(200, 'Logout from all other sessions')
 
 
+@bp.route('/reset_password', methods=['POST'])
+def reset_password():
+    if cfg.AD_USE:
+        abort(409, "Change your password in company's auth system")
+    data = validate(get_json(), schemas.password)
+    accounts_logic.reset_password(data['password'])
+    return make_ok(200, 'Successfully reseted - check your email')
+
+
 @bp.route('/add_admin', methods=['POST'])
 @login_required
 def add_admin():
@@ -98,3 +107,13 @@ def remove_admin():
     data = validate(get_json(), schemas.manage_admin)
     accounts_logic.change_privileges(data['email'], 'user')
     return make_ok(200, "Admin rights was removed")
+
+
+@bp.route('/reset_superadmin_password', methods=['POST'])
+def reset_superadmin_password():
+    if not cfg.RESET_SUPER_ADMIN_PASSWORD_FROM_ANYWHERE and not request.host == "localhost:" + str(cfg.PORT):
+        abort(404, 'Unknown route')
+
+    data = validate(get_json(), schemas.superadmin_reset_password)
+    accounts_logic.superadmin_reset_password(data['token'], data['new_password'])
+    return make_ok(200, 'Changed')

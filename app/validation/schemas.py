@@ -128,3 +128,11 @@ web_terminal = Schema(
     },
     ignore_extra_keys=True
 )
+
+superadmin_reset_password = Schema(
+    {
+        'token': Use(str),
+        'new_password': Use(str)
+    },
+    ignore_extra_keys=True
+)

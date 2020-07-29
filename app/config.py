@@ -22,7 +22,7 @@ cfg.DB_CONNECTION_STRING = _get_db_connection_string()
 cfg.RUNTIME_FOLDER = os.path.dirname(os.path.abspath(__file__))
 cfg.SCRIPTS_FOLDER = os.getenv('SCRIPT_FOLDER', '{}/scripts'.format(cfg.RUNTIME_FOLDER))
 
-cfg.AD_USE = True if os.getenv('AD_SERVER_ADDR') else False
+cfg.AD_USE = True if os.getenv('AD_USE') == "True" else False
 cfg.AD_SERVER_ADDR = os.getenv('AD_SERVER_ADDR', 'localhost')
 
 cfg.DEFAULT_USER_STATUS = os.getenv('DEFAULT_USER_STATUS')
@@ -31,6 +31,9 @@ cfg.SITE_ADDR = os.getenv('SITE_ADDR')
 
 cfg.SUPER_ADMIN_MAIL = os.getenv('SUPER_ADMIN_MAIL')
 cfg.SUPER_ADMIN_PASSWORD = os.getenv('SUPER_ADMIN_PASSWORD')
+
+cfg.SUPER_ADMIN_TOKEN = os.getenv('SUPER_ADMIN_TOKEN')
+cfg.RESET_SUPER_ADMIN_PASSWORD_FROM_ANYWHERE = True if os.getenv('RESET_SUPER_ADMIN_PASSWORD_FROM_ANYWHERE') == "True" else False
 
 cfg.MAIL_SERVER = os.getenv('MAIL_SERVER')
 cfg.MAIL_PORT = os.getenv('MAIL_PORT')

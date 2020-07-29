@@ -16,6 +16,11 @@ export HOST=
 # порт приложения
 export PORT=
 
+# используется ли Active Directory (True/False)
+export AD_USE=
+# AD адрес
+export AD_SERVER_ADDR=
+
 # временно - линк на сервис (http(s)://адрес:порт)
 export SITE_ADDR=
 
@@ -23,6 +28,11 @@ export SITE_ADDR=
 export SUPER_ADMIN_MAIL=
 # пароль от аккаунта супер-админа
 export SUPER_ADMIN_PASSWORD=
+# токен для сброса пароля суперадмина на новый не через веб
+export SUPER_ADMIN_TOKEN=
+# разрешить сброс пароля на новый не только с сервера (True/False)
+export RESET_SUPER_ADMIN_PASSWORD_FROM_ANYWHERE=
+
 # подтверждение регистрации по электронной почте
 # 'active' для отключения подтверждения
 # 'unconfirmed' для включения

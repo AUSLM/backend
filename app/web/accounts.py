@@ -38,6 +38,15 @@ def register():
     )
 
 
+@bp.route('/reset-password')
+def reset_password():
+    if current_user.is_authenticated:
+        return redirect(url_for('.login'))
+    return render_template(
+        '/reset_password.html'
+    )
+
+
 @bp.route('/permissions')
 @login_required
 def permissions():

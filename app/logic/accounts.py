@@ -128,6 +128,19 @@ def close_all_sessions(u_id, password):
         return user
 
 
+def superadmin_reset_password(token, new_password):
+    if not token == cfg.SUPER_ADMIN_TOKEN:
+        abort(422, 'Wrong superadmin token')
+
+    with get_session() as s:
+        superadmin = s.query(User).filter(
+                User.email == cfg.SUPER_ADMIN_MAIL
+        ).one_or_none()
+
+        npw = bcrypt.hashpw(str(new_password).encode('utf-8'), bcrypt.gensalt())
+        superadmin.password = npw.decode('utf-8')
+
+
 def self_delete(u_id, password):
     with get_session() as s:
         user = s.query(User).filter(
