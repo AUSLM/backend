@@ -141,24 +141,19 @@ def superadmin_reset_password(token, new_password):
         superadmin.password = npw.decode('utf-8')
 
 
-def self_delete(u_id, password):
+# for admins
+
+def delete_user(e_email, u_email):
     with get_session() as s:
         user = s.query(User).filter(
-                User.id == u_id
+                User.email == u_email,
+                User.status == 'active',
+                User.service_status != 'superadmin'
         ).one_or_none()
-
-        if cfg.AD_USE:
-            if not ldap_check(email, password):
-                abort(422, 'Invalid password')
-        else:
-            ipw = str(password).encode('utf-8')
-            pw = str(user.password).encode('utf-8')
-            if not bcrypt.checkpw(ipw, pw):
-                abort(422, 'Invalid password')
+        if not user:
+            abort(404, 'User not found')
         user.status = 'deleted'
 
-
-# for admins
 
 def change_privileges(u_email, role):
     with get_session() as s:

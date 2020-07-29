@@ -58,3 +58,14 @@ def permissions():
         current_user=current_user,
         admins=admins
     )
+
+
+@bp.route('/management/users')
+@login_required
+def manage_users():
+    if current_user.service_status == 'user':
+        abort(404, "No rights")
+    return render_template(
+        '/manage_users.html',
+        current_user=current_user
+    )

@@ -23,6 +23,7 @@ def ldap_check(email, password):
     connection.protocol_version = 3
     try:
         connection.simple_bind_s(email, password)
+        connection.unbind()
         return True
     except Exception as e:
         return False

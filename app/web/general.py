@@ -14,7 +14,7 @@ bp = Blueprint('general_web', __name__)
 @login_required
 def home():
     return render_template(
-        '/blank.html',
+        '/home.html',
         current_user=current_user
     )
 
