@@ -8,4 +8,4 @@ from ..validation import schemas
 
 
 bp = Blueprint('users_api_web', __name__)
-
+# TODO ?
