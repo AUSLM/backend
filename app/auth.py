@@ -1,9 +1,10 @@
 import jwt
-import time
 import ldap3
 import bcrypt
 from flask import abort
+from flask_login import current_user
 
+from .api_web import make_4xx
 from .config import cfg
 from .db import User, Token, get_session
 
@@ -104,3 +105,19 @@ def reissue_token(u_id):
         s.flush()
         s.refresh(token)
         return get_jwt(token)
+
+
+def admin_route(route):
+    def wrapper(*args, **kwargs):
+        if current_user.service_status not in ('superadmin', 'admin'):
+            return make_4xx(404, 'Unknown route')
+        return route(*args, *kwargs)
+    return wrapper
+
+
+def superadmin_route(route):
+    def wrapper(*args, **kwargs):
+        if current_user.service_status != 'superadmin':
+            return make_4xx(404, 'Unknown route')
+        return route(*args, *kwargs)
+    return wrapper
