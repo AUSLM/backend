@@ -8,7 +8,6 @@ from app import db #, controller
 from app.config import cfg
 
 
-
 def main():
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
