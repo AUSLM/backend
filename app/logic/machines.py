@@ -42,8 +42,7 @@ def add_machine(e_email, addr, domain):
             ).one_or_none()
             if access:
                 if access.status == 'deleted':
-                    # TODO remove copy-paste
-                    access.status = 'active'
+                    access.status == 'active'
             else:
                 access = Access(u_id=admin.id, m_id=machine.id)
                 s.add(access)

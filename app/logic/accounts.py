@@ -191,7 +191,7 @@ def change_privileges(u_email, role):
 
             if access:
                 if access.status == 'deleted':
-                    access.status = 'active'
+                    access.status == 'active'
             else:
                 access = Access(u_id=user.id, m_id=machine.id)
                 s.add(access)
