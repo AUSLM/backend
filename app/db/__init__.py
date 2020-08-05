@@ -7,6 +7,7 @@ import sys
 from .models import *
 from ..config import cfg
 
+
 _engine = create_engine(cfg.DB_CONNECTION_STRING)
 _Session = sessionmaker(bind=_engine, expire_on_commit=False)
 
@@ -17,8 +18,7 @@ def get_session():
     try:
         yield session
         session.commit()
-    except Exception as e:
-        logging.error(f'Exception while committing transaction:\n{e}')
+    except:
         session.rollback()
         raise
     finally:

@@ -49,9 +49,9 @@ def send_reset_email(email, new_password):
 def send_500_email(e, error):
     try:
         msg = Message(
-            body=error,
-            subject='AUSLM 500 server error',
-            recipients=[cfg.SUPER_ADMIN_MAIL]
+            body = error,
+            subject = 'AUSLM 500 server error',
+            recipients = [cfg.SUPER_ADMIN_MAIL]
         )
         app.mail.send(msg)
         logging.info('Sending 500 error message')
