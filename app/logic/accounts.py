@@ -11,8 +11,27 @@ import logging
 
 from ..config import cfg
 from ..db import *
-from ..auth import ldap_check
+from ..auth import ldap_login
 from .. import mails
+
+
+def ldap_check_register(email):
+    with get_session() as s:
+        user = s.query(User).filter(
+                User.email == email
+        ).one_or_none()
+
+        if user:
+            if user.status == 'deleted':
+                user.status = cfg.DEFAULT_USER_STATUS
+        else:
+            #ldap get user name and surname TODO
+            name = "LDAP_Name"
+            surname = "LDAP_Surname"
+            user = User(email=email, password='-', name=name, surname=surname,
+                        confirmation_link='-')
+            s.add(user)
+        logging.info('Registering new user [{}]'.format(email))
 
 
 def register_user(email, password, name, surname):
@@ -36,13 +55,8 @@ def register_user(email, password, name, surname):
                 user.surname = surname
                 user.status = cfg.DEFAULT_USER_STATUS
                 user.confirmation_link = confirmation_link
-                if cfg.AD_USE:
-                    if not ldap_check(email, password):
-                        abort(409, "Can't register via AD because wrong auth")
-                    user.password = '-'
-                else:
-                    pw = bcrypt.hashpw(str(password).encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-                    user.password = pw
+                pw = bcrypt.hashpw(str(password).encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+                user.password = pw
             elif user.status == 'banned':
                 abort(409, 'User with this email was banned')
             else:
@@ -50,13 +64,8 @@ def register_user(email, password, name, surname):
         else:
             user = User(email=email, password='-', name=name, surname=surname,
                         confirmation_link=confirmation_link)
-
-            if cfg.AD_USE:
-                if not ldap_check(email, password):
-                    abort(409, "Can't register via AD because wrong auth")
-            else:
-                pw = bcrypt.hashpw(str(password).encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-                user.password = pw
+            pw = bcrypt.hashpw(str(password).encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+            user.password = pw
             s.add(user)
 
         if cfg.DEFAULT_USER_STATUS == 'unconfirmed':
@@ -116,8 +125,8 @@ def close_all_sessions(u_id, password):
     with get_session() as s:
         user = s.query(User).get(u_id)
 
-        if cfg.AD_USE:
-            if not ldap_check(email, password):
+        if cfg.AD_USE and user.email != cfg.SUPER_ADMIN_MAIL:
+            if not ldap_login(email, password):
                 abort(422, 'Invalid password')
         else:
             ipw = str(password).encode('utf-8')

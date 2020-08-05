@@ -18,6 +18,8 @@ def login():
         return make_4xx(409, 'User is currently authenticated')
 
     data = validate(get_json(), schemas.login)
+    if cfg.AD_USE:
+        accounts_logic.ldap_check_register(data['email'])
     user = pre_login(data['email'], data['password'])
     login_user(user)
     if 'next' in data:
@@ -36,6 +38,8 @@ def logout():
 def register():
     if current_user.is_authenticated:
         return make_4xx(409, 'User is currently authenticated')
+    if cfg.AD_USE:
+        return make_4xx(404, 'Unknown route')
 
     data = validate(get_json(), schemas.register)
     accounts_logic.register_user(data['email'], data['password'],
@@ -45,6 +49,8 @@ def register():
 
 @bp.route('/confirm/<link>', methods=['GET'])
 def confirm(link):
+    if cfg.AD_USE:
+        return make_4xx(404, 'Unknown route')
     accounts_logic.confirm_user(link)
     return make_ok(200, 'User was confirmed')
 

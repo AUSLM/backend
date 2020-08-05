@@ -15,7 +15,7 @@ def user_loader(uc_id):
         ).one_or_none()
 
 
-def ldap_check(email, password):
+def ldap_login(email, password):
     server = f"ldap://{cfg.AD_SERVER_ADDR}"
 
     connection = ldap3.initialize(server)
@@ -44,8 +44,8 @@ def pre_login(email, password):
         if user.status == 'unconfirmed':
             abort(409, 'Trying to login unconfirmed user')
 
-        if cfg.AD_USE:
-            if not ldap_check(email, password):
+        if cfg.AD_USE and email != cfg.SUPER_ADMIN_MAIL:
+            if not ldap_login(email, password):
                 abort(422, 'Invalid password')
         else:
             pw = str(password).encode('utf-8')
@@ -54,8 +54,6 @@ def pre_login(email, password):
                 abort(422, 'Invalid password')
         return user
 
-
-# Some jwt api stuff
 
 def header_loader(header):
     try:

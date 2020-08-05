@@ -44,7 +44,7 @@ def create_tables(password):
             name='Super',
             surname='Admin',
             service_status='superadmin',
-            confirmation_link='none',
+            confirmation_link='-',
             status='active'
         )
         s.add(root)
