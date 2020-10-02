@@ -22,33 +22,36 @@ USERS
                         <th>E-mail</th>
                         <th>Name</th>
                         <th>Surname</th>
-                        <th>Service status</th>
-                        <th>Delete</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                        <th>E-mail</th>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Service status</th>
-                        <th>Delete</th>
-                    </tr>
-                </tfoot>
                 <tbody>
                     {% for user in users %}
                     <tr>
                         <td class="text-center align-middle"><a class="btn btn-link" href="/user/{{user.email}}" role="button">{{user.email}}</a></td>
                         <td class="text-center align-middle" class="text-center">{{user.name}}</td>
                         <td class="text-center align-middle" class="text-center">{{user.surname}}</td>
-                        <td class="text-center align-middle" class="text-center">{{user.service_status}}</td>
                         <td class="text-center align-middle">
+                            <button type="button" class="btn btn-primary btn-icon-split">
+                                <span class="icon">
+                                    <i class="fas fa-angle-double-up"></i>
+                                </span>
+                                <span class="text">Grant admin</span>
+                            </button>
                             <button type="button" class="btn btn-danger btn-icon-split">
                                 <span class="icon">
                                     <i class="fas fa-trash"></i>
                                 </span>
                                 <span class="text">Delete</span>
                             </button>
+                            {% if not AD_USE %}
+                            <button type="button" class="btn btn-danger btn-icon-split">
+                                <span class="icon">
+                                    <i class="fas fa-ban"></i>
+                                </span>
+                                <span class="text">Ban</span>
+                            </button>
+                            {% endif %}
                         </td>
                     </tr>
                     {% endfor %}

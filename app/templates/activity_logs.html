@@ -1,0 +1,52 @@
+{% extends "blank.html" %}
+{% block title %}
+<title>Activity - AUSLM</title>
+{% endblock %}
+
+{% block styles%}
+<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block page %}
+ACTIVITY
+{% endblock %}
+
+{% block content %}
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive" id="machines_table">
+            <table class="table table-sm table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Executor</th>
+                        <th>Action</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                    <tr>
+                        <td class="text-center align-middle">{{log.action_time}}</td>
+                        <td class="text-center align-middle">{{log.executor}}</td>
+                        <td class="text-center align-middle">{{log.action}}</td>
+                        <td class="text-center align-middle">{{log.description}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js%}
+<!-- Datatables -->
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- Datatables custom script -->
+<script src="/static/js/datatables.js"></script>
+{% endblock %}

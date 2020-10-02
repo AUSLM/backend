@@ -10,7 +10,7 @@ class Forbidden(Hook):
 
     def _default_function(self, nkey, data, error):
         raise SchemaForbiddenKeyError(
-            'Forbidden key encountered: {} in {}'.format(nkey, data),
+            f'Forbidden key encountered: {nkey} in {data}',
             self._error
         )
 
@@ -22,14 +22,14 @@ class unknownKey(Hook):
 
     def _default_function(self, nkey, data, error):
         raise SchemaForbiddenKeyError(
-            'Unknown key encountered: {} in {}'.format(nkey, data),
-            '{}: {}'.format(self._error, nkey)
+            f'Unknown key encountered: {nkey} in {data}',
+            f'{self._error}: {nkey}'
         )
 
 
 login = Schema(
     {
-        'email': Use(str),
+        'email': Use(str.lower),
         'password': Use(str),
         Optional('next'): Use(str),
     },
@@ -38,7 +38,7 @@ login = Schema(
 
 register = Schema(
     {
-        'email': Use(str),
+        'email': Use(str.lower),
         'password': Use(str),
         'name': Use(str),
         'surname': Use(str)
@@ -61,9 +61,9 @@ password = Schema(
     ignore_extra_keys=True
 )
 
-reset_password = Schema(
+email = Schema(
     {
-        'email': Use(str)
+        'email': Use(str.lower)
     },
     ignore_extra_keys=True
 )
@@ -76,32 +76,17 @@ add_machine = Schema(
     ignore_extra_keys=True
 )
 
-remove_machine = Schema(
+address = Schema(
     {
         'address': Use(str),
     },
     ignore_extra_keys=True
 )
 
-grant_access = Schema(
+manage_access = Schema(
     {
         'email': Use(str),
         'address': Use(str),
-    },
-    ignore_extra_keys=True
-)
-
-revoke_access = Schema(
-    {
-        'email': Use(str),
-        'address': Use(str),
-    },
-    ignore_extra_keys=True
-)
-
-manage_admin = Schema(
-    {
-        'email': Use(str),
     },
     ignore_extra_keys=True
 )
@@ -116,15 +101,8 @@ add_key = Schema(
 
 remove_key = Schema(
     {
-        'u_email': Use(str),
+        'u_email': Use(str.lower),
         'k_id': Use(int),
-    },
-    ignore_extra_keys=True
-)
-
-web_terminal = Schema(
-    {
-        'address': Use(str),
     },
     ignore_extra_keys=True
 )

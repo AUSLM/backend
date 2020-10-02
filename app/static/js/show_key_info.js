@@ -32,7 +32,7 @@ function show_key_info_function(u_email, k_id) {
         body => {
             key_name_modal.innerHTML = body['name']
             key_data_modal.innerHTML = body['key']
-            key_time_modal.innerHTML = body['update_time']
+            key_time_modal.innerHTML = body['upload_time']
         }
     ).catch(
         error => {

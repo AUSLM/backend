@@ -1,26 +1,24 @@
-from flask import (Blueprint, request, redirect, url_for,
-                   render_template, jsonify, abort)
-from flask_login import (login_required, login_user, logout_user, current_user)
+from flask import Blueprint, render_template, abort
+from flask_login import login_required, current_user
 
-from ..logic import users as users_logic, machines as machines_logic
+from ..logic import users as users_logic
 from ..config import cfg
 from ..auth import get_token
-
-import logging
 
 
 bp = Blueprint('users_web', __name__)
 
 
-#@bp.route('/management/users')
-#@login_required
-#def manage_users():
-#    if current_user.service_status == 'user':
-#        abort(404, "No rights")
-#    return render_template(
-#        '/manage_users.html',
-#        current_user=current_user
-#    )
+@bp.route('/management/users')
+@login_required
+def manage_users():
+    if current_user.service_status == 'user':
+        abort(404, "No rights")
+    return render_template(
+        '/manage_users.html',
+        current_user=current_user,
+        AD_USE=cfg.AD_USE
+    )
 
 
 @bp.route('/users')
@@ -32,7 +30,8 @@ def users():
     return render_template(
         '/users.html',
         current_user=current_user,
-        users=users
+        users=users,
+        AD_USE=cfg.AD_USE
     )
 
 
@@ -50,7 +49,8 @@ def user_page(email):
         current_user=current_user,
         user=user,
         machines=machines,
-        keys=keys
+        keys=keys,
+        AD_USE=cfg.AD_USE
     )
 
 

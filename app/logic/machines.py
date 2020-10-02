@@ -1,21 +1,17 @@
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy import desc, or_
 from flask import abort
 from datetime import datetime
-import requests
-import os
 import nanoid
 import logging
 
-from ..config import cfg
 from ..db import *
-from .. import mails
+from .general import save_log
 
 
-def add_machine(e_email, addr, domain):
+def add_machine(e_email, address, domain):
     with get_session() as s:
         machine = s.query(Machine).filter(
-                Machine.address == addr
+                Machine.address == address
         ).one_or_none()
 
         if machine:
@@ -25,7 +21,7 @@ def add_machine(e_email, addr, domain):
                 machine.status = 'active'
                 machine.domain = domain
         else:
-            machine = Machine(address=addr, domain=domain)
+            machine = Machine(address=address, domain=domain)
             s.add(machine)
         
         s.flush()
@@ -46,8 +42,9 @@ def add_machine(e_email, addr, domain):
             else:
                 access = Access(u_id=admin.id, m_id=machine.id)
                 s.add(access)
-        
-    logging.info('Adding machine [{} - {}]'.format(domain, addr))
+
+        s = save_log(s, e_email, 'added machine',f'{address} ({domain})')
+        logging.info(f'Adding machine [{address} - {domain}]')
 
 
 def remove_machine(e_email, address):
@@ -58,7 +55,6 @@ def remove_machine(e_email, address):
         ).one_or_none()
         if not machine:
             abort(404, 'No machine with this address!')
-        logging.info('Deleting machine [{}]'.format(address))
 
         machine.status = 'deleted'
         accesses = s.query(Access).filter(
@@ -67,6 +63,9 @@ def remove_machine(e_email, address):
         for access in accesses:
             access.status = 'deleted'
             access.disabled = datetime.utcnow()
+
+        s = save_log(s, e_email, 'removed mahine',f'{address}')
+        logging.info(f'Removing machine [{address}]')
 
 
 def get_all_machines():
@@ -80,17 +79,19 @@ def get_all_machines():
             result.append({
                 'address': machine.address,
                 'domain': machine.domain,
+                'os': machine.operating_system,
+                'os_version': machine.os_version
             })
     return result
 
 
-def get_machine_users(addr):
+def get_machine_users(address):
     result = []
     with get_session() as s:
         machine_users = s.query(User, Access, Machine).filter(
                 User.id == Access.u_id,
                 Access.m_id == Machine.id,
-                Machine.address == addr,
+                Machine.address == address,
                 Access.status == 'active',
                 User.service_status == 'user'
         ).all()
@@ -104,10 +105,10 @@ def get_machine_users(addr):
     return result
 
 
-def get_domain(addr):
+def get_domain(address):
     with get_session() as s:
         machine =  s.query(Machine).filter(
-                Machine.address == addr,
+                Machine.address == address,
                 Machine.status == 'active'
         ).one_or_none()
 
@@ -147,6 +148,6 @@ def web_terminal(U_email, address):
         #    "PASSWORD": temp_password
         #})
         return {
-            "url": "http://{}:7080".format(address),
+            "url": f'http://{address}:7080',
             "password": temp_password,
         }

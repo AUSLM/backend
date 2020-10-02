@@ -1,11 +1,7 @@
-from flask import (Blueprint, request, redirect, url_for,
-                   render_template, jsonify, abort)
-from flask_login import (login_required, login_user, logout_user, current_user)
+from flask import Blueprint, render_template, abort
+from flask_login import login_required, current_user
 
 from ..logic import users as users_logic, machines as machines_logic
-from ..config import cfg
-
-import logging
 
 
 bp = Blueprint('machines_web', __name__)

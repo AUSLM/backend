@@ -3,26 +3,21 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from gevent.pywsgi import WSGIServer
 from gevent import monkey
-
 import logging
 
+from .errors import add_error_handlers, on_json_loading_failed
 from .config import cfg
-
 from .auth import user_loader, header_loader
-
 from .web import (accounts as accounts_web,
                   machines as machines_web,
                   users as users_web,
                   accesses as accesses_web,
                   general as general_web)
-
 from .api_web import (accounts as accounts_api,
                       machines as machines_api,
                       users as users_api,
                       accesses as accesses_api,
                       keys as keys_api)
-
-from .errors import add_error_handlers, on_json_loading_failed
 
 
 app = Flask(__name__)
@@ -61,7 +56,7 @@ login_manager.init_app(app)
 login_manager.user_loader(user_loader)
 #login_manager.header_loader(auth.header_loader)
 
-logging.basicConfig(format='[%(asctime)s] [%(levelname)s] %(message)s',
+logging.basicConfig(format='[%(asctime)s]  [%(levelname)s]  %(message)s',
                     level=logging.INFO)
 
 

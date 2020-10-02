@@ -25,13 +25,24 @@ def get_session():
         session.close()
 
 
+def check_database():
+    try:
+        with get_session() as s:
+            answer = s.execute("SELECT version();")
+            result = [{column: value for column, value in rowproxy.items()} for rowproxy in answer]
+            logging.info(f'Successfully connecting to database.\n{str(result[0]["version"])}')
+    except Exception as e:
+        logging.info(f'Failed to connect to database.\n{str(e)}')
+        sys.exit(f'\n----------\nStopped service - try to solve lack of connection to database')
+
+
 def create_tables(password):
     logging.info('Dropping existing tables')
     try:
         Base.metadata.reflect(_engine)
         Base.metadata.drop_all(_engine)
     except Exception as e:
-        logging.info('Failed to drop tables.\n{}'.format(str(e)))
+        logging.info(f'Failed to drop tables.\n{str(e)}')
         sys.exit("Stopped service - try to clean db directly")
 
     logging.info('Creating tables')
@@ -48,4 +59,4 @@ def create_tables(password):
             status='active'
         )
         s.add(root)
-    logging.info('Root user with mail [' + cfg.SUPER_ADMIN_MAIL + '] was created')
+    logging.info(f'Root user with mail [{cfg.SUPER_ADMIN_MAIL}] was created')

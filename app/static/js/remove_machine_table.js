@@ -26,7 +26,7 @@ function remove_machine_function(obj) {
     ).then(
         response => {
             if (response.status < 200 || response.status >= 300) {
-                button.disabled = true
+                obj.disabled = true
                 return response.json().then(
                     data => Promise.reject(data['error'])
                 )

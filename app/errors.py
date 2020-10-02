@@ -1,4 +1,5 @@
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError, OperationalError
+from psycopg2 import DatabaseError, OperationalError as psycopg2_OperationalError
 from werkzeug.exceptions import HTTPException
 from flask import jsonify, abort, request
 
@@ -9,9 +10,8 @@ from .web import *
 def add_error_handlers(app):
     app.register_error_handler(401, unauthorized_handler)
     app.register_error_handler(404, not_found_handler)
-    app.register_error_handler(405, make_405)
+    app.register_error_handler(405, api_405)
     app.register_error_handler(500, server_error_handler)
-
     app.register_error_handler(HTTPException, http_error_handler)
 
 
@@ -25,14 +25,14 @@ def on_json_loading_failed(err, e):
 
 def unauthorized_handler(e):
     if request.path.startswith('/api/'):
-        return make_4xx(401, 'Unauthorized')
+        return api_4xx(401, 'Unauthorized')
     else:
         return web_401(e)
 
 
 def not_found_handler(e):
     if request.path.startswith('/api/'):
-        return make_404(e)
+        return api_404(e)
     else:
         if request.path.startswith('/user/'):
             return web_404(e, "User")
@@ -44,6 +44,6 @@ def not_found_handler(e):
 
 def server_error_handler(e):
     if request.path.startswith('/api/'):
-        return server_500_error(e)
+        return api_500(e)
     else:
         return web_500(e)

@@ -20,15 +20,22 @@ def log_file_email_errors(e):
         f.write('\n')
 
 
-def send_confirm_email(email, link):
+def send_link_email(email, link, event):
     try:
-        msg = Message(
-            body = cfg.SITE_ADDR + '/confirm/' + link,
-            subject = 'AUSLM confirmation link',
-            recipients = [email]
-        )
+        if cfg.AD_USE:
+            msg = Message(
+                body = f'You has been invited to {cfg.SITE_ADDRESS}',
+                subject = f'AUSLM invite',
+                recipients = [email]
+            )
+        else:
+            msg = Message(
+                body = f'{cfg.SITE_ADDRESS}/{event}/{link}',
+                subject = f'AUSLM {event} link',
+                recipients = [email]
+            )
         app.mail.send(msg)
-        logging.info('Sending confirmation message to ' + email)
+        logging.info(f'Sending {event} message to {email}')
     except Exception as e:
         log_file_email_errors(e)
 
@@ -36,12 +43,12 @@ def send_confirm_email(email, link):
 def send_reset_email(email, new_password):
     try:
         msg = Message(
-            body = 'Your new password - ' + new_password,
+            body = f'Your new password - {new_password}',
             subject = 'AUSLM password reset',
             recipients = [email]
         )
         app.mail.send(msg)
-        logging.info('Sending password reset message to ' + email)
+        logging.info(f'Sending password reset message to {email}')
     except Exception as e:
         log_file_email_errors(e)
 

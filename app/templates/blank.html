@@ -83,13 +83,13 @@
                         <span>Manage users</span></a>
                 </li>
 
-                {% endif %}
-
                 <hr class="sidebar-divider d-md-block">
 
                 <div class="sidebar-heading">
-                    Other
+                    Rights
                 </div>
+
+                {% endif %}
 
                 {% if current_user.service_status == 'superadmin' %}
 
@@ -109,10 +109,22 @@
                         <span>Manage accesses</span></a>
                 </li>
 
+                <hr class="sidebar-divider d-md-block">
+
+                <div class="sidebar-heading">
+                    Logging
+                </div>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="/activity">
+                    <a class="nav-link" href="/logs/activity">
                         <i class="fas fa-fw fa-calendar-check"></i>
                         <span>Activity</span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/logs/controller">
+                        <i class="fas fa-fw fa-calendar-check"></i>
+                        <span>Controller</span></a>
                 </li>
 
                 {% endif %}

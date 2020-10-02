@@ -21,24 +21,11 @@ MACHINES
                     <tr>
                         <th>Domain</th>
                         <th>Address</th>
-                        <th>Open Web Shell</th>
-                        <th>Connect via SSH</th>
-                        {% if current_user.service_status != 'user' %}
-                        <th>Delete</th>
-                        {% endif %}
+                        <th>OS</th>
+                        <th>Version</th>
+                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                        <th>Domain</th>
-                        <th>Address</th>
-                        <th>Open Web Shell</th>
-                        <th>Connect via SSH</th>
-                        {% if current_user.service_status != 'user' %}
-                        <th>Delete</th>
-                        {% endif %}
-                    </tr>
-                </tfoot>
                 <tbody>
                     {% for machine in machines %}
                     <tr>
@@ -48,32 +35,31 @@ MACHINES
                             {% else %} {{machine.domain}} {% endif %}
                         </td>
                         <td class="text-center align-middle">{{machine.address}}</td>
+                        <td class="text-center align-middle">{{machine.os}}</td>
+                        <td class="text-center align-middle">{{machine.os_version}}</td>
                         <td class="text-center align-middle text-light">
                             <button class="btn btn-primary btn-icon-split" id="web_terminal_button" onclick="get_web_terminal_function(this)" machine_address={{machine.address}} type="button">
                                 <span class="icon">
                                     <i class="fas fa-arrow-right"></i>
                                 </span>
-                                <span id="button_text" class="text">Open</span>
+                                <span id="button_text" class="text">Open web-term</span>
                             </button>
-                        </td>
-                        <td class="text-center align-middle">
                             <button type="button" class="btn btn-primary btn-icon-split" id="ssh_addr_copy_button" onclick="ssh_addr_copy(this)" ssh_addr="{{current_user.email}}@{{machine.address}}:22">
                                 <span class="icon">
                                     <i class="fas fa-paste"></i>
                                 </span>
                                 <span class="text">SSH link</span>
                             </button>
-                        </td>
-                        {% if current_user.service_status != 'user' %}
-                        <td class="text-center align-middle">
+
+                            {% if current_user.service_status != 'user' %}
                             <button type="button" onclick="remove_machine_function(this)" class="btn btn-danger btn-icon-split" machine_address={{machine.address}} >
                                 <span class="icon">
                                     <i class="fas fa-trash"></i>
                                 </span>
                                 <span id="button_text" class="text">Remove</span>
                             </button>
+                            {% endif %}
                         </td>
-                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>

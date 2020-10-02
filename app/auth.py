@@ -15,6 +15,7 @@ def user_loader(uc_id):
         ).one_or_none()
 
 
+# rewrite ldap_login
 def ldap_login(email, password):
     server = f"ldap://{cfg.AD_SERVER_ADDR}"
 

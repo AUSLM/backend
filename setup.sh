@@ -19,10 +19,10 @@ export PORT=
 # используется ли Active Directory (True/False)
 export AD_USE=
 # AD адрес
-export AD_SERVER_ADDR=
+export AD_SERVER_ADDRESS=
 
 # временно - линк на сервис (http(s)://адрес:порт)
-export SITE_ADDR=
+export SITE_ADDRESS=
 
 # почта супер-админа
 export SUPER_ADMIN_MAIL=

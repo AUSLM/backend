@@ -1,5 +1,4 @@
-from sqlalchemy import (Column, Integer, String, ForeignKey,
-                        DateTime, Boolean, UniqueConstraint)
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.postgresql import ENUM, UUID, TEXT
 from flask_login import UserMixin
@@ -46,6 +45,8 @@ class Machine(Base):
 
     address = Column(String, unique=True, nullable=False)
     domain = Column(String)
+    operating_system = Column(String)
+    os_version = Column(String)
 
 
 class Access(Base):
@@ -69,7 +70,7 @@ class PublicKey(Base):
 
     key = Column(String, unique=True, nullable=False)
     name = Column(String, nullable=False)
-    update_time = Column(DateTime, default=datetime.utcnow, nullable=False)
+    upload_time = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 
 # Some jwt api stuff
@@ -82,3 +83,21 @@ class Token(Base):
     status = Column(Status, default='active', nullable=False)
 
     issued = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
+class Logs(Base):
+    __tablename__ = 'activity_logs'
+
+    id = Column(Integer, primary_key=True)
+    executor = Column(String)
+    action = Column(String, nullable=False)
+    description = Column(String, nullable=False)
+    action_time = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
+class ControllerLogs(Base):
+    __tablename__ = 'controller_logs'
+
+    id = Column(Integer, primary_key=True)
+    description = Column(String, nullable=False)
+    action_time = Column(DateTime, default=datetime.utcnow, nullable=False)

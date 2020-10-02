@@ -34,8 +34,9 @@ function remove_admin_function() {
             setTimeout(
                 () => {
                     button.disabled = false
-                    button.textContent = 'Remove'
+                    button.textContent = 'Revoke'
                     form.reset()
+                    document.location.reload(true)
                 },
                 750
             )
@@ -46,7 +47,7 @@ function remove_admin_function() {
             setTimeout(
                 () => {
                     button.disabled = false
-                    button.textContent = 'Remove'
+                    button.textContent = 'Revoke'
                 },
                 750
             )

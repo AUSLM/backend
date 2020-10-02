@@ -6,7 +6,7 @@ function grant_admin_function() {
     button.disabled = true
 
     fetch(
-        '/api/add_admin',
+        '/api/grant_admin',
         {
             method: 'POST',
             body: JSON.stringify(
@@ -36,6 +36,7 @@ function grant_admin_function() {
                     button.disabled = false
                     button.textContent = 'Grant'
                     form.reset()
+                    document.location.reload(true)
                 },
                 750
             )

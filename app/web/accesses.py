@@ -1,11 +1,5 @@
-from flask import (Blueprint, request, redirect, url_for,
-                   render_template, jsonify, abort)
-from flask_login import (login_required, login_user, logout_user, current_user)
-
-from ..logic import accesses as accesses_logic
-from ..config import cfg
-
-import logging
+from flask import Blueprint, render_template, abort
+from flask_login import login_required, current_user
 
 
 bp = Blueprint('accesses_web', __name__)

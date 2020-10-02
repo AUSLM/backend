@@ -1,15 +1,8 @@
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy import desc
 from flask import abort
-from datetime import datetime
-import requests
-import os
-import nanoid
 import logging
 
-from ..config import cfg
 from ..db import *
-from .. import mails
+from .general import save_log
 
 
 def get_user_info(u_email):
@@ -42,7 +35,7 @@ def get_user_keys(u_email):
                 'id': key.id,
                 'key': key.key,
                 'name': key.name,
-                'update_time': key.update_time.isoformat(timespec='minutes', sep=' '),
+                'upload_time': key.upload_time.isoformat(timespec='minutes', sep=' '),
             })
     return result
 
@@ -62,6 +55,8 @@ def get_user_machines(u_email):
                 'id': machine.id,
                 'address': machine.address,
                 'domain': machine.domain,
+                'os': machine.operating_system,
+                'os_version': machine.os_version,
                 'access_issued': access.issued.isoformat(timespec='minutes', sep=' '),
             })
     return result

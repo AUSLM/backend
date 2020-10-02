@@ -1,11 +1,8 @@
-from flask import (Blueprint, request, redirect, url_for,
-                   render_template, jsonify, abort)
-from flask_login import (login_required, login_user, logout_user, current_user)
+from flask import Blueprint, redirect, url_for, render_template, abort
+from flask_login import login_required, logout_user, current_user
 
 from ..logic import accounts as accounts_logic
 from ..config import cfg
-
-import logging
 
 
 bp = Blueprint('accounts_web', __name__)
@@ -38,6 +35,29 @@ def register():
     )
 
 
+@bp.route('/confirm/<string:link>')
+def confirm(link):
+    if cfg.AD_USE:
+        abort(404, "Page not found")
+    answer = accounts_logic.confirm_user(link)
+    return render_template(
+        '/confirmation.html',
+        answer=answer
+    )
+
+
+@bp.route('/invite/<string:link>')
+def invite(link):
+    if cfg.AD_USE:
+        abort(404, "Page not found")
+    info = accounts_logic.find_invited_user(link)
+    return render_template(
+        '/invitation.html',
+        user=info['user'] if 'user' in info else '',
+        error=info['error'] if 'error' in info else ''
+    )
+
+
 @bp.route('/reset-password')
 def reset_password():
     if current_user.is_authenticated:
@@ -57,15 +77,4 @@ def permissions():
         '/permissions.html',
         current_user=current_user,
         admins=admins
-    )
-
-
-@bp.route('/management/users')
-@login_required
-def manage_users():
-    if current_user.service_status == 'user':
-        abort(404, "No rights")
-    return render_template(
-        '/manage_users.html',
-        current_user=current_user
     )
